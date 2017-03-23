@@ -1,0 +1,30 @@
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="container">
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>各種設定
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse" data-original-title="" title="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <?echo $this->Html->link('買掛支払先（店舗別）', array('controller'=>'admin', 'action'=>'intermediate_one'));?>
+                            </li>
+                            <li class="list-group-item">
+                                <?echo $this->Html->link('定額支出先（店舗別）', array('controller'=>'admin', 'action'=>'intermediate_three'));?>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
