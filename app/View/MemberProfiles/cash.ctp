@@ -148,7 +148,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?$num=0;$cell_arr=array(1=>5,2=>37,3=>49,4=>56,5=>61,6=>67);$type_arr=array();?>
+                                                    <?$num=0;$cell_arr=array(1=>5,2=>39,3=>51,4=>58,5=>63,6=>69);$type_arr=array();?>
                                                     <?foreach($kaikake_stores as $kaikake_store):?>
                                                         <tr>
                                                             <?$type=$kaikake_store['Type'];?>
