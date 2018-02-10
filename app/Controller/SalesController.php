@@ -72,7 +72,7 @@ class SalesController extends AppController{
 			App::import('Vendor', 'PHPExcel/Classes/PHPExcel/IOFactory');
 			// Excel2007形式(xlsx)テンプレートの読み込み
 			$reader = PHPExcel_IOFactory::createReader('Excel2007');
-			$template = realpath(TMP);
+			$template = realpath(WWW_ROOT);
 			$template .= '/excel/';
 			#曜日配列
 			$weekday = array( "日", "月", "火", "水", "木", "金", "土" );
@@ -325,7 +325,8 @@ class SalesController extends AppController{
 							->setCellValue('D'.$row_number, $receipt_summary['total'])
 							->setCellValue('E'.$row_number, $receipt_summary['credit'])
 							->setCellValue('U'.$row_number, $receipt_summary['discount']*-1)
-							->setCellValue('V'.$row_number, $receipt_summary['voucher']);
+							->setCellValue('V'.$row_number, $receipt_summary['voucher'])
+							->setCellValue('W'.$row_number, $receipt_summary['other']);
 						#売掛集金if文
 						if($location['Location']['name']=='和光店'){
 							$obj->setActiveSheetIndex(0)
