@@ -48,6 +48,7 @@ class SalesController extends AppController{
 		$this->loadModel("SalesAttribute");
 		$this->loadModel("AddCash");
 		$this->loadModel("Stocktaking");
+		$this->loadModel("ReceiptSummary");
 	}
 
 	#月末報告
@@ -277,7 +278,8 @@ class SalesController extends AppController{
 						}
 					}
 				}
-			}elseif($this->request->data['data_type']==2){
+			}
+			elseif($this->request->data['data_type']==2){
 				//店舗毎エクセルシート切り替え
 				if($location['Location']['name']=='池袋店'){
 					$data_name = 'monthly-report-expense-ikebukuro';
@@ -287,19 +289,13 @@ class SalesController extends AppController{
 					$data_name = 'monthly-report-expense-wako';
 				}
 				else{
-					echo "Error : 404";
-					exit;
+					echo "Error : 404";exit;
 				}
 				$templatePath = $template.$data_name.'.xlsx';
 				$obj = $reader->load($templatePath);
-				// 3シートを指定して、セルに書き込む
 				//年度と月
 				$obj->setActiveSheetIndex(0)
 					->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])));
-				#客数取得
-				$total_sales = $this->TotalSales->find('all', array(
-					'conditions' => array('TotalSales.location_id' => $location['Location']['id'], 'TotalSales.working_day LIKE' => '%'.$this->request->data['month'].'%')
-				));
 				#支出カテゴリー
 				$this->loadModel("ExpenseType");
 				$expense_types = $this->ExpenseType->find('all', array(
@@ -313,79 +309,50 @@ class SalesController extends AppController{
 					$expense_arr[$expense_type['ExpenseType']['id']] = $char;
 					$char = ++$char;
 				}
-				#その他割引カテゴリー
-				$this->loadModel("OtherType");
-				$other_types = $this->OtherType->find('all', array(
-					'conditions' => array('OtherType.location_id' => $location['Location']['id'])
-				));
-				$char = 'V';
-				$other_arr = array();
-				foreach($other_types as $other_type){
-					$obj->setActiveSheetIndex(0)
-						->setCellValue($char.'4', $other_type['OtherType']['name']);
-					$other_arr[$other_type['OtherType']['id']] = $char;
-					$char = ++$char;
-				}
-				#Excel入力
-				foreach ($total_sales as $total_sales_one) {
-					#営業日
-					$working_day = $total_sales_one['TotalSales']['working_day'];
-					//曜日取得
-					$day = $weekday[date('w', strtotime($working_day))];
-					//開始番号設定
-					$row_number = date('j', strtotime($working_day)) + 4;
-
-					$obj->setActiveSheetIndex(0)
-						->setCellValue('C'.$row_number, $day)
-						->setCellValue('D'.$row_number, $total_sales_one['TotalSales']['sales']+$total_sales_one['TotalSales']['tax'])
-						->setCellValue('E'.$row_number, $total_sales_one['TotalSales']['credit_sales'])
-						->setCellValue('U'.$row_number, $total_sales_one['TotalSales']['coupon_discounts']);
-					#売掛集金if文
-					if($location['Location']['name']=='和光店'){
+				# 営業日取得
+				$working_days = $this->ReceiptSummary->getWorkingDay($location['Location']['id'], $this->request->data['month']);
+				if($working_days!=null){
+					foreach($working_days as $working_day){
+						//曜日取得
+						$day = $weekday[date('w', strtotime($working_day))];
+						//開始番号設定
+						$row_number = date('j', strtotime($working_day)) + 4;
+						# レシートサマリ
+						$receipt_summary = $this->ReceiptSummary->dailySummarize($location['Location']['id'], $working_day);
+						#セルにInsert
 						$obj->setActiveSheetIndex(0)
-							->setCellValue('Z'.$row_number, $total_sales_one['TotalSales']['add']);
-					}
-
-					#支出
-					$expenses = $this->Expense->find('all', array(
-						'conditions' => array('Expense.location_id' => $location['Location']['id'], 'Expense.working_day' => $working_day)
-					));
-					#種類別累計計算
-					$expense_arr_two = array();
-					foreach ($expenses as $expense){
-						if(isset($expense_arr_two[$expense['Type']['id']])){
-							$expense_arr_two[$expense['Type']['id']] += (int)$expense['Expense']['fee'];
-						}else{
-							$expense_arr_two[$expense['Type']['id']] = (int)$expense['Expense']['fee'];
-						}
-					}
-					#挿入
-					foreach($expense_arr_two as $key => $e){
-						$obj->setActiveSheetIndex(0)
-							->setCellValue($expense_arr[$key].$row_number, $e);
-					}
-					#その他割引
-					$other_discounts = $this->OtherDiscount->find('all', array(
-						'conditions' => array('OtherDiscount.location_id' => $location['Location']['id'], 'OtherDiscount.working_day' => $working_day)
-					));
-					#種類別累計計算
-					$other_arr_two = array();
-					foreach ($other_discounts as $other_discount){
-						if(isset($other_arr_two[$other_discount['OtherType']['id']])){
-							$other_arr_two[$other_discount['OtherType']['id']] += (int)$other_discount['OtherDiscount']['fee'];
-						}else{
-							$other_arr_two[$other_discount['OtherType']['id']] = (int)$other_discount['OtherDiscount']['fee'];
-						}
-					}
-					#挿入
-					if($other_arr_two!=null){
-						foreach($other_arr_two as $key => $o){
+							->setCellValue('C'.$row_number, $day)
+							->setCellValue('D'.$row_number, $receipt_summary['total'])
+							->setCellValue('E'.$row_number, $receipt_summary['credit'])
+							->setCellValue('U'.$row_number, $receipt_summary['discount']*-1)
+							->setCellValue('V'.$row_number, $receipt_summary['voucher']);
+						#売掛集金if文
+						if($location['Location']['name']=='和光店'){
 							$obj->setActiveSheetIndex(0)
-								->setCellValue($other_arr[$key].$row_number, $o);
+								->setCellValue('Z'.$row_number, 0);
+						}
+						#支出
+						$expenses = $this->Expense->find('all', array(
+							'conditions' => array('Expense.location_id' => $location['Location']['id'], 'Expense.working_day' => $working_day)
+						));
+						if($expenses!=null){
+							#種類別累計計算
+							$expense_arr_two = array();
+							foreach ($expenses as $expense){
+								if(isset($expense_arr_two[$expense['Type']['id']])){
+									$expense_arr_two[$expense['Type']['id']] += (int)$expense['Expense']['fee'];
+								}else{
+									$expense_arr_two[$expense['Type']['id']] = (int)$expense['Expense']['fee'];
+								}
+							}
+							#挿入
+							foreach($expense_arr_two as $key => $e){
+								$obj->setActiveSheetIndex(0)
+									->setCellValue($expense_arr[$key].$row_number, $e);
+							}
 						}
 					}
 				}
-
 			}
 			elseif($this->request->data['data_type']==3){
 				//店舗毎エクセルシート切り替え
