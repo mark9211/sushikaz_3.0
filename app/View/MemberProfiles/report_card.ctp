@@ -428,14 +428,14 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                             </td>
                                                         <?endforeach;?>
                                                         <td class="totalSum">
-                                                            <?echo $total;?>
+                                                            <?= $total;?>
                                                         </td>
                                                     </tr>
                                                     <!-- END 給与 -->
                                                     <!-- BEGIN 給与（アルバイト） -->
                                                     <tr>
                                                         <td style="background-color: #7FFF00!important">
-                                                            <?$num++;echo $num;?>
+                                                            <?$num=28;echo $num;?>
                                                         </td>
                                                         <td>
                                                             給与（アルバイト）
