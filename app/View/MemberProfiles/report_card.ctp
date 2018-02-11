@@ -567,7 +567,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                         <?$total=0;?>
                                                         <?foreach($associations as $association):?>
                                                             <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable split_cell">
+                                                            <td class="unclickable">
                                                                 <?= $summaries[$id]['voucher'];?>
                                                             </td>
                                                             <?$total+=$summaries[$id]['voucher'];?>
