@@ -503,10 +503,50 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                         </tr>
                                                     <?endforeach;?>
                                                     <!-- END 定額支出 -->
-                                                    <!-- BEGIN 雑費 -->
-                                                    <?$num++?>
-                                                    <!-- END 雑費 -->
-                                                    <!-- BEGIN 買掛 -->
+                                                    <!-- BEGIN その他 -->
+                                                    <?foreach($other as $key => $o):?>
+                                                        <tr>
+                                                            <td>
+                                                                <?$num++;echo $num;?>
+                                                            </td>
+                                                            <td>
+                                                                <?=$key;?>
+                                                            </td>
+                                                            <?$total=0;?>
+                                                            <?foreach($associations as $association):?>
+                                                                <?$id=$association['Association']['id'];?>
+                                                                <td class="unclickable">
+                                                                    <?if(isset($o[$id])){echo $o[$id];$total+=$o[$id];}else{echo 0;}?>
+                                                                </td>
+                                                            <?endforeach;?>
+                                                            <td class="unclickable">
+                                                                <?=$total;?>
+                                                            </td>
+                                                        </tr>
+                                                    <?endforeach;?>
+                                                    <!-- END その他 -->
+                                                    <!-- BEGIN 店内経費 -->
+                                                    <?$num=57;?>
+                                                    <tr>
+                                                        <td>
+                                                            <?=$num;?>
+                                                        </td>
+                                                        <td>
+                                                            ポイント・金券
+                                                        </td>
+                                                        <?$total=0;?>
+                                                        <?foreach($associations as $association):?>
+                                                            <?$id=$association['Association']['id'];?>
+                                                            <td class="unclickable">
+                                                                <?= $summaries[$id]['voucher'];?>
+                                                            </td>
+                                                            <?$total+=$summaries[$id]['voucher'];?>
+                                                        <?endforeach;?>
+                                                        <td class="unclickable">
+                                                            <?=$total;?>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- BEGIN 消耗品 -->
                                                     <tr>
                                                         <td>
                                                             <?$num++;echo $num;?>
@@ -531,52 +571,10 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                             </td>
                                                         <?endforeach;?>
                                                         <td class="unclickable">
-                                                            <?= $total;?>
+                                                            <?=$total;?>
                                                         </td>
                                                     </tr>
-                                                    <!-- END 買掛 -->
-                                                    <!-- BEGIN その他 -->
-                                                    <?foreach($other as $key => $o):?>
-                                                        <tr>
-                                                            <td>
-                                                                <?$num++;echo $num;?>
-                                                            </td>
-                                                            <td>
-                                                                <?echo $key;?>
-                                                            </td>
-                                                            <?$total=0;?>
-                                                            <?foreach($associations as $association):?>
-                                                                <?$id=$association['Association']['id'];?>
-                                                                <td class="unclickable">
-                                                                    <?if(isset($o[$id])){echo $o[$id];$total+=$o[$id];}else{echo 0;}?>
-                                                                </td>
-                                                            <?endforeach;?>
-                                                            <td class="unclickable">
-                                                                <?echo $total;?>
-                                                            </td>
-                                                        </tr>
-                                                    <?endforeach;?>
-                                                    <!-- END その他 -->
-                                                    <!-- BEGIN 店内経費 -->
-                                                    <tr>
-                                                        <td>
-                                                            <?$num++;echo $num;?>
-                                                        </td>
-                                                        <td>
-                                                            ポイント・金券
-                                                        </td>
-                                                        <?$total=0;?>
-                                                        <?foreach($associations as $association):?>
-                                                            <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable">
-                                                                <?= $summaries[$id]['voucher'];?>
-                                                            </td>
-                                                            <?$total+=$summaries[$id]['voucher'];?>
-                                                        <?endforeach;?>
-                                                        <td class="unclickable">
-                                                            <?= $total;?>
-                                                        </td>
-                                                    </tr>
+                                                    <!-- END 消耗品 -->
                                                     <?if(isset($tennai2)&&$tennai2!=null):?>
                                                         <?foreach($tennai2 as $key => $t):?>
                                                             <tr>
@@ -584,7 +582,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                                     <?$num++;echo $num;?>
                                                                 </td>
                                                                 <td>
-                                                                    <?echo $key;?>
+                                                                    <?=$key;?>
                                                                 </td>
                                                                 <?$total=0;?>
                                                                 <?foreach($associations as $association):?>
@@ -598,7 +596,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                                     </td>
                                                                 <?endforeach;?>
                                                                 <td class="totalSum">
-                                                                    <?echo $total;?>
+                                                                    <?=$total;?>
                                                                 </td>
                                                             </tr>
                                                         <?endforeach?>
