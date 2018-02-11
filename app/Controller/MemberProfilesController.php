@@ -25,6 +25,7 @@ class MemberProfilesController extends AppController{
         $this->loadModel("CustomerTimezone");
         $this->loadModel("SalesLunch");
         $this->loadModel("TotalSales");
+        $this->loadModel("ReceiptSummary");
     }
 
     #index上書き
@@ -1207,17 +1208,15 @@ class MemberProfilesController extends AppController{
             App::import('Vendor', 'PHPExcel/Classes/PHPExcel/IOFactory');
             // Excel2007形式(xlsx)テンプレートの読み込み
             $reader = PHPExcel_IOFactory::createReader('Excel2007');
-            $template = realpath(TMP);
+            $template = realpath(WWW_ROOT);
             $template .= '/excel/';
             $data_name = 'profit-and-loss';
             $templatePath = $template.$data_name.'.xlsx';
             $obj = $reader->load($templatePath);
-
             # パラメータ
             $data = $this->request->data;
             $date = $data['date'];
             unset($data['date']);
-
             //page 1
             $obj->setActiveSheetIndex(0)
                 ->setCellValue('B2', date('Y年m月', strtotime($date)));
@@ -1232,8 +1231,7 @@ class MemberProfilesController extends AppController{
                     ->setCellValue('E'.$num, $arr[2])
                     ->setCellValue('G'.$num, $arr[3])
                     ->setCellValue('I'.$num, $arr[4])
-                    ->setCellValue('K'.$num, $arr[5])
-                    ->setCellValue('M'.$num, $arr[6]);
+                    ->setCellValue('K'.$num, $arr[5]);
             }
             // Excel2007
             $filename = '全店売上成績表-'.date('Y年m月', strtotime($date)).'.xlsx';
@@ -1540,11 +1538,9 @@ class MemberProfilesController extends AppController{
             $this->loadModel("MonthlySalary");
             $this->loadModel("MonthlyExpense");
             $this->loadModel("MonthlyExpenseType");
-
             # アソシ二段階
             $this->KaikakeFee->recursive = 2;
             $this->Sales->recursive = 2;
-
             # POST
             if($this->request->is('post')){
                 $this->Session->setFlash('登録完了しました','flash_success');
@@ -1553,86 +1549,23 @@ class MemberProfilesController extends AppController{
                 # パラメータ
                 $date = $this->params['url']['date'];
                 # Associations
+                $locations = $this->Location->find('all');
                 $associations = $this->Association->find('all');
                 $this->set("associations", $associations);
                 $stocktaking_types = $this->StocktakingType->find('all');
-
+                # 各種データ取得
                 if($date!=null){
                     $this->set("date", $date);
                     $month = date('Y-m', strtotime($date));
                     # 売上（池袋・赤羽・和光２店舗）
-                    $locations = $this->Location->find('all');
                     $sales_arr = array();
-                    $drink_arr = array();
-                    foreach($locations as $location){
-                        $total_sales = $this->TotalSales->find('all', array(
-                            'conditions' => array('TotalSales.location_id' => $location['Location']['id'], 'TotalSales.working_day LIKE' => '%'.$month.'%')
-                        ));
-                        $total=0;
-                        if($total_sales!=null){
-                            foreach($total_sales as $total_sales_one){
-                                $total+=$total_sales_one['TotalSales']['sales'];
-                            }
-                        }
-                        $sales_arr[$location['Location']['id']] = $total;
-                        # 飲料売上
-                        $sales = $this->Sales->find('all', array(
-                            'conditions' => array('Sales.location_id' => $location['Location']['id'], 'Sales.working_day LIKE' => '%'.$month.'%')
-                        ));
-                        if($location['Location']['id']==3){
-                            $sales_result = $this->Sales->drinkCalculateAddTax($sales);
-                            $drink_arr[$location['Location']['id']] = $sales_result['drink'];
-                            # フード
-                            $sales_arr[3] = $sales_result['food1'];
-                            $sales_arr[4] = $sales_result['food2'];
-                        }else{
-                            $drink_arr[$location['Location']['id']] = $this->Sales->drinkCalculate($sales);
-                        }
+                    # レシートサマリ
+                    foreach($associations as $association){
+                        $receipt_summary = $this->ReceiptSummary->monthlySummarize($association['Location']['id'], $month, $association['Attribute']['brand']);
+                        $sales_arr[$association['Association']['id']] = $receipt_summary;
                     }
-                    /*
-                    $sales = $this->Sales->find('all', array(
-                        'conditions' => array('Sales.location_id' => 3, 'Sales.working_day LIKE' => '%'.$month.'%')
-                    ));
-                    if($sales!=null){
-                        $sushi=0;$yaki=0;
-                        foreach($sales as $sales_one){
-                            $attribute_name = $sales_one['Type']['Attribute']['name'];
-                            $type_name = $sales_one['Type']['name'];
-                            if($attribute_name=='寿司'){
-                                if($type_name=='板場売上'||$type_name=='焼場売上'){
-                                    $sushi+=floor($sales_one['Sales']['fee']*1.08);
-                                }
-                            }
-                            elseif($attribute_name=="焼肉"){
-                                if($type_name=='調理場売上'){
-                                    $yaki+=floor($sales_one['Sales']['fee']*1.08);
-                                }
-                            }
-                        }
-                        # 売上更新
-                        $sales_arr[3] = $sushi;
-                        $sales_arr[4] = $yaki;
-                    }
-                    */
-                    # 飲料（和光）
-                    if($drink_arr[3]%2==0){
-                        $drink_sum = $drink_arr[3]/2;
-                        $drink_arr[3] = $drink_sum;
-                        $drink_arr[4] = $drink_sum;
-                    }else{
-                        $drink_sum = floor($drink_arr[3]/2);
-                        $drink_arr[3] = $drink_sum+1;
-                        $drink_arr[4] = $drink_sum;
-                    }
-                    $sales_arr[1] -= $drink_arr[1];
-                    $sales_arr[2] -= $drink_arr[2];
-
-                    $this->set("food", $sales_arr);
-                    $this->set("drink", $drink_arr);
-
+                    $this->set("summaries", $sales_arr);
                     # 給料手当
-                    $associations = $this->Association->find('all');
-                    // 既存チェック
                     $part_arr = array();$full_arr = array();
                     $style_arr = array(0=>"full", 1=>"part");
                     foreach($associations as $association){
@@ -1650,11 +1583,11 @@ class MemberProfilesController extends AppController{
                                 if($id==3||$id==4){
                                     $percent_arr = array(3=>0.25, 4=>0.75);
                                     $full_num_arr = array(3=>1, 4=>2);
-                                    $total_wako_sales = $sales_arr[3]+$sales_arr[4];
+                                    $total_wako_sales = $sales_arr[3]['total']+$sales_arr[4]['total'];
                                     //PartTimer
                                     if($style=="part"){
                                         $exception = $result['exception']*$percent_arr[$id];
-                                        $percent = $sales_arr[$id]/$total_wako_sales;
+                                        $percent = $sales_arr[$id]['total']/$total_wako_sales;
                                         $value = ($result['part']-$result['exception'])*$percent+$exception;
                                     }
                                     //FullTimer
@@ -1690,10 +1623,8 @@ class MemberProfilesController extends AppController{
                             }
                         }
                     }
-                    //debug($part_arr);debug($full_arr);
                     $this->set("full_salary", $full_arr);
                     $this->set("part_salary", $part_arr);
-
                     # 買掛支払
                     $kaikake_arr = array();
                     foreach($stocktaking_types as $stocktaking_type){
@@ -1721,7 +1652,6 @@ class MemberProfilesController extends AppController{
                             }
                         }
                     }
-
                     $kaikake_total = array();$kaikake_total2 = array();
                     foreach($kaikake_arr as $key => $kaikake){
                         if($key!="消耗品"&&$key!="その他"){
@@ -1741,11 +1671,10 @@ class MemberProfilesController extends AppController{
                             }
                         }
                     }
-                    //debug($kaikake_total2);
                     $this->set("kaikake_total", $kaikake_total);
                     $this->set("kaikake_total2", $kaikake_total2);
                     $this->set("kaikake", $kaikake_arr);
-                    # その他詳細
+                    # その他
                     $other_arr = array();
                     $associations = $this->Association->find('all');
                     $kaikake_stores = $this->KaikakeStore->find('all', array(
@@ -1777,7 +1706,6 @@ class MemberProfilesController extends AppController{
                         }
                     }
                     $this->set("other", $other_arr);
-
                     # 定額支出
                     $expense_df_types = $this->ExpenseDfType->find('all');
                     $data_set = array();
@@ -1814,7 +1742,6 @@ class MemberProfilesController extends AppController{
                     $monthly_expense_types = $this->MonthlyExpenseType->find('all');
                     foreach($locations as $location){
                         $result = $this->expenseCalculator($location, $month);
-                        //debug($result);
                         # ゴミ（exception）
                         if($location['Location']['name']=='和光店'){
                             $result['expense']['ゴミ'] = 43200;
@@ -1822,14 +1749,6 @@ class MemberProfilesController extends AppController{
                         $associations = $this->Association->convertLocationToAssociation($location);$cnt=count($associations);
                         foreach($associations as $association){
                             $id = $association['Association']['id'];
-                            $coupon = $result['coupon']/$cnt;$point = $result['point']/$cnt;$discount = $result['discount']/$cnt;
-
-                            # 端数調整
-                            if($result['coupon']%2 != 0){if($id==3){$coupon=ceil($result['coupon']/$cnt);}elseif($id==4){$coupon=floor($result['coupon']/$cnt);}}
-                            if($result['point']%2 != 0){if($id==3){$point=ceil($result['point']/$cnt);}elseif($id==4){$point=floor($result['point']/$cnt);}}
-                            if($result['discount']%2 != 0){if($id==3){$discount=ceil($result['discount']/$cnt);}elseif($id==4){$discount=floor($result['discount']/$cnt);}}
-                            $result_arr[$association['Association']['id']] = array('coupon'=>$coupon, 'point'=>$point, 'discount'=>$discount);
-
                             # 既存チェック
                             foreach($monthly_expense_types as $monthly_expense_type){
                                 $type_id = $monthly_expense_type['MonthlyExpenseType']['id'];
@@ -1882,20 +1801,6 @@ class MemberProfilesController extends AppController{
                                 if(!isset($total_expense_arr[$id])){ $total_expense_arr[$id] = 0; }
                                 $total_expense_arr[$id] += $expense_arr[$type_name][$id]['MonthlyExpense']['fee'];
                             }
-                            /*
-                            foreach($result['expense'] as $key => $expense){
-                                $expense_arr[$key][$association['Association']['id']] = $expense/$cnt;
-                                # コピー
-                                if($key=="コピー"){
-                                    $expense_arr[$key][$association['Association']['id']] += 3000;
-                                }
-                                # Total
-                                if(!isset($total_expense_arr[$association['Association']['id']])){
-                                    $total_expense_arr[$association['Association']['id']] = 0;
-                                }
-                                $total_expense_arr[$association['Association']['id']] += $expense_arr[$key][$association['Association']['id']];
-                            }
-                            */
                         }
                     }
                     //debug($expense_arr);
@@ -1903,20 +1808,6 @@ class MemberProfilesController extends AppController{
                     $this->set("tennai2", $expense_arr);
                     $this->set("total_tennai2", $total_expense_arr);
                     #################################################################################################################################
-
-                    # 事務所・経費
-                    $associations = $this->Association->find('all');
-                    $office = array();
-                    foreach($associations as $association){
-                        $id = $association['Association']['id'];
-                        if($id==2){
-                            $office[$id] = 1300000;
-                        }else{
-                            $office[$id] = 1000000;
-                        }
-                    }
-                    $this->set("office", $office);
-
                 }
 
             }
