@@ -409,9 +409,10 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <?endforeach;?>
                                                     <!-- END 買掛 -->
                                                     <!-- BEGIN 給与（社員） -->
+                                                    <?$num=28;?>
                                                     <tr>
                                                         <td style="background-color:#7FFF00 !important">
-                                                            <?$num+=2;echo $num;?>
+                                                            <?=$num;?>
                                                         </td>
                                                         <td>
                                                             給与（社員）
@@ -435,7 +436,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <!-- BEGIN 給与（アルバイト） -->
                                                     <tr>
                                                         <td style="background-color: #7FFF00!important">
-                                                            <?$num=28;echo $num;?>
+                                                            <?$num++;echo $num;?>
                                                         </td>
                                                         <td>
                                                             給与（アルバイト）
