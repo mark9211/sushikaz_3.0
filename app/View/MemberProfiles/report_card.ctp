@@ -567,12 +567,13 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                         <?$total=0;?>
                                                         <?foreach($associations as $association):?>
                                                             <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable">
-                                                                <?echo $tennai[$id]['point'];$total+=$tennai[$id]['point'];?>
+                                                            <td class="unclickable split_cell">
+                                                                <?= $summaries[$id]['voucher'];?>
                                                             </td>
+                                                            <?$total+=$summaries[$id]['voucher'];?>
                                                         <?endforeach;?>
                                                         <td class="unclickable">
-                                                            <?echo $total;?>
+                                                            <?= $total;?>
                                                         </td>
                                                     </tr>
                                                     <?if(isset($tennai2)&&$tennai2!=null):?>
