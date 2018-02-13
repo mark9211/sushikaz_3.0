@@ -1252,17 +1252,15 @@ class MemberProfilesController extends AppController{
             App::import('Vendor', 'PHPExcel/Classes/PHPExcel/IOFactory');
             // Excel2007形式(xlsx)テンプレートの読み込み
             $reader = PHPExcel_IOFactory::createReader('Excel2007');
-            $template = realpath(TMP);
+            $template = realpath(WWW_ROOT);
             $template .= '/excel/';
             $data_name = 'kaikake';
             $templatePath = $template.$data_name.'.xlsx';
             $obj = $reader->load($templatePath);
-
             # パラメータ
             $data = $this->request->data;
             $date = $data['date'];
             unset($data['date']);
-
             //page 1
             $this_month = date('m月', strtotime($date));
             $next_month = date('m月', strtotime("$date +1 month"));
@@ -1287,7 +1285,6 @@ class MemberProfilesController extends AppController{
                     ->setCellValue('G'.$num, $arr[5])
                     ->setCellValue('H'.$num, $arr[6]);
             }
-
             # 棚卸
             $this->loadModel("Stocktaking");
             $stocktakings = $this->Stocktaking->find('all', array(
@@ -1318,7 +1315,6 @@ class MemberProfilesController extends AppController{
                         ->setCellValue('H'.$r, $a['this'][4]);
                 }
             }
-
             // Excel2007
             $filename = '買掛現金支払表-'.date('Y年m月', strtotime($date)).'.xlsx';
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
