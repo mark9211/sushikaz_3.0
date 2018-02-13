@@ -1301,18 +1301,26 @@ class MemberProfilesController extends AppController{
                 $r = $cell_arr[$key];
                 if($r!=null){
                     # last
+                    if(isset($a['last'][1])){ $last1=$a['last'][1]; }else{ $last1=0; }
+                    if(isset($a['last'][2])){ $last2=$a['last'][2]; }else{ $last2=0; }
+                    if(isset($a['last'][3])){ $last3=$a['last'][3]; }else{ $last3=0; }
+                    if(isset($a['last'][4])){ $last4=$a['last'][4]; }else{ $last4=0; }
                     $obj->setActiveSheetIndex(0)
-                        ->setCellValue('E'.$r, $a['last'][1])
-                        ->setCellValue('F'.$r, $a['last'][2])
-                        ->setCellValue('G'.$r, $a['last'][3])
-                        ->setCellValue('H'.$r, $a['last'][4]);
+                        ->setCellValue('E'.$r, $last1)
+                        ->setCellValue('F'.$r, $last2)
+                        ->setCellValue('G'.$r, $last3)
+                        ->setCellValue('H'.$r, $last4);
                     $r++;
                     # this
+                    if(isset($a['this'][1])){ $this1=$a['this'][1]; }else{ $this1=0; }
+                    if(isset($a['this'][2])){ $this2=$a['this'][2]; }else{ $this2=0; }
+                    if(isset($a['this'][3])){ $this3=$a['this'][3]; }else{ $this3=0; }
+                    if(isset($a['this'][4])){ $this4=$a['this'][4]; }else{ $this4=0; }
                     $obj->setActiveSheetIndex(0)
-                        ->setCellValue('E'.$r, $a['this'][1])
-                        ->setCellValue('F'.$r, $a['this'][2])
-                        ->setCellValue('G'.$r, $a['this'][3])
-                        ->setCellValue('H'.$r, $a['this'][4]);
+                        ->setCellValue('E'.$r, $this1)
+                        ->setCellValue('F'.$r, $this2)
+                        ->setCellValue('G'.$r, $this3)
+                        ->setCellValue('H'.$r, $this4);
                 }
             }
             // Excel2007
