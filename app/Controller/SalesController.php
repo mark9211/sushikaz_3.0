@@ -280,23 +280,14 @@ class SalesController extends AppController{
 				}
 			}
 			elseif($this->request->data['data_type']==2){
-				//店舗毎エクセルシート切り替え
-				if($location['Location']['name']=='池袋店'){
-					$data_name = 'monthly-report-expense-ikebukuro';
-				}elseif($location['Location']['name']=='赤羽店'){
-					$data_name = 'monthly-report-expense-akabane';
-				}elseif($location['Location']['name']=='和光店'){
-					$data_name = 'monthly-report-expense-wako';
-				}
-				else{
-					echo "Error : 404";exit;
-				}
+				$data_name = 'monthly-report-expense';
 				$templatePath = $template.$data_name.'.xlsx';
 				$obj = $reader->load($templatePath);
-				//年度と月
+				# 年度と月
 				$obj->setActiveSheetIndex(0)
-					->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])));
-				#支出カテゴリー
+					->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])))
+					->setCellValue('M2', $location['Location']['name']);
+				# 支出カテゴリー
 				$this->loadModel("ExpenseType");
 				$expense_types = $this->ExpenseType->find('all', array(
 					'conditions' => array('ExpenseType.location_id' => $location['Location']['id'])
@@ -317,16 +308,16 @@ class SalesController extends AppController{
 						$day = $weekday[date('w', strtotime($working_day))];
 						//開始番号設定
 						$row_number = date('j', strtotime($working_day)) + 4;
-						# レシートサマリ
+						#レシートサマリ
 						$receipt_summary = $this->ReceiptSummary->dailySummarize($location['Location']['id'], $working_day);
 						#セルにInsert
 						$obj->setActiveSheetIndex(0)
 							->setCellValue('C'.$row_number, $day)
 							->setCellValue('D'.$row_number, $receipt_summary['total'])
 							->setCellValue('E'.$row_number, $receipt_summary['credit'])
-							->setCellValue('U'.$row_number, $receipt_summary['discount']*-1)
-							->setCellValue('V'.$row_number, $receipt_summary['voucher'])
-							->setCellValue('W'.$row_number, $receipt_summary['other']);
+							->setCellValue('U'.$row_number, $receipt_summary['voucher'])
+							->setCellValue('V'.$row_number, $receipt_summary['other'])
+							->setCellValue('Z'.$row_number, $receipt_summary['discount']);
 						#売掛集金if文
 						if($location['Location']['name']=='和光店'){
 							$obj->setActiveSheetIndex(0)
