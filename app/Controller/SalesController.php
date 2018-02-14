@@ -321,7 +321,7 @@ class SalesController extends AppController{
 						#売掛集金if文
 						if($location['Location']['name']=='和光店'){
 							$obj->setActiveSheetIndex(0)
-								->setCellValue('Y'.$row_number, 0);
+								->setCellValue('X'.$row_number, 0);
 						}
 						#支出
 						$expenses = $this->Expense->find('all', array(
