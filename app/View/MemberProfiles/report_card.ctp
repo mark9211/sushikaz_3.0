@@ -548,7 +548,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <?=$num;?>
+                                                            <?$num++;echo $num;?>
                                                         </td>
                                                         <td>
                                                             ポイント・金券
