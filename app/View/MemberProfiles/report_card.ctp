@@ -376,9 +376,9 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                         <?foreach($associations as $association):?>
                                                             <?$id=$association['Association']['id'];?>
                                                             <td class="unclickable split_cell">
-                                                                <?= $summaries[$id]['total']-$summaries[$id]['tax'];?>
+                                                                <?= $summaries[$id]['total']-$summaries[$id]['tax']-$summaries[$id]['discount'];?>
                                                             </td>
-                                                            <?$total+=$summaries[$id]['total']-$summaries[$id]['tax'];?>
+                                                            <?$total+=$summaries[$id]['total']-$summaries[$id]['tax']-$summaries[$id]['discount'];?>
                                                         <?endforeach;?>
                                                         <td class="unclickable split_cell">
                                                             <?=$total;?>
@@ -527,6 +527,25 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <!-- END その他 -->
                                                     <!-- BEGIN 店内経費 -->
                                                     <?$num=57;?>
+                                                    <tr>
+                                                        <td>
+                                                            <?=$num;?>
+                                                        </td>
+                                                        <td>
+                                                            割引・割増
+                                                        </td>
+                                                        <?$total=0;?>
+                                                        <?foreach($associations as $association):?>
+                                                            <?$id=$association['Association']['id'];?>
+                                                            <td class="unclickable">
+                                                                <?= $summaries[$id]['discount']*-1;?>
+                                                            </td>
+                                                            <?$total+=$summaries[$id]['discount']*-1;?>
+                                                        <?endforeach;?>
+                                                        <td class="unclickable">
+                                                            <?=$total;?>
+                                                        </td>
+                                                    </tr>
                                                     <tr>
                                                         <td>
                                                             <?=$num;?>
