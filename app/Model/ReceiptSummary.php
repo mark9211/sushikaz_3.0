@@ -47,7 +47,12 @@ class ReceiptSummary extends AppModel {
             ),
             'group' => array('DATE_FORMAT(working_day, "%Y-%m")'),
         ));
-        if(isset($receipt_summary[0])){ return $receipt_summary[0]; }
+        if(isset($receipt_summary[0])){
+            return $receipt_summary[0];
+        }
+        else{
+            return null;
+        }
     }
 
     #日別サマリ
@@ -137,6 +142,23 @@ class ReceiptSummary extends AppModel {
         else{
             return null;
         }
+    }
+
+    #日次時間帯別サマリ
+    public function timezoneSummarize($location_id, $working_day){
+        $receipt_summary = $this->find('all', array(
+            'fields' => array(
+                'time_format(ReceiptSummary.time, "%H") as hour',
+                'sum(ReceiptSummary.total) as total',
+                'sum(ReceiptSummary.tax) as tax',
+                'sum(ReceiptSummary.visitors) as visitors',
+                'sum(ReceiptSummary.food) as food',
+                'sum(ReceiptSummary.drink) as drink',
+            ),
+            'conditions' => array('ReceiptSummary.location_id' => $location_id, 'ReceiptSummary.working_day' => $working_day),
+            'group' => array('time_format(ReceiptSummary.time, "%H")'),
+        ));
+        return $receipt_summary;
     }
 
     private function brand_init(){
