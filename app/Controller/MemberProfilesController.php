@@ -1222,16 +1222,28 @@ class MemberProfilesController extends AppController{
                 ->setCellValue('B2', date('Y年m月', strtotime($date)));
             $sheet = $obj->getActiveSheet();
             $sheet->setTitle(date('Y年m月', strtotime($date)));
-
+            # 税抜に金額修正する行
+            $num_arr = [23,24,25,26,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,51,52,53,54,55,56,57,58,59,60,61,64,65];
             foreach($data as $d){
                 $arr = explode(',',$d);
                 $num = $arr[0];
+                # 項目名
                 $obj->setActiveSheetIndex(0)
-                    ->setCellValue('C'.$num, $arr[1])
-                    ->setCellValue('E'.$num, $arr[2])
-                    ->setCellValue('G'.$num, $arr[3])
-                    ->setCellValue('I'.$num, $arr[4])
-                    ->setCellValue('K'.$num, $arr[5]);
+                    ->setCellValue('C'.$num, $arr[1]);
+                if(in_array($num, $num_arr)){
+                    $obj->setActiveSheetIndex(0)
+                        ->setCellValue('E'.$num, floor($arr[2]/1.08))
+                        ->setCellValue('G'.$num, floor($arr[3]/1.08))
+                        ->setCellValue('I'.$num, floor($arr[4]/1.08))
+                        ->setCellValue('K'.$num, floor($arr[5]/1.08));
+                }
+                else{
+                    $obj->setActiveSheetIndex(0)
+                        ->setCellValue('E'.$num, floor($arr[2]))
+                        ->setCellValue('G'.$num, floor($arr[3]))
+                        ->setCellValue('I'.$num, floor($arr[4]))
+                        ->setCellValue('K'.$num, floor($arr[5]));
+                }
             }
             // Excel2007
             $filename = '全店売上成績表-'.date('Y年m月', strtotime($date)).'.xlsx';
