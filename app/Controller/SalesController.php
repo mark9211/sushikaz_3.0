@@ -70,9 +70,9 @@ class SalesController extends AppController{
 			// // エクセル出力用ライブラリ
 			App::import('Vendor', 'PHPExcel/Classes/PHPExcel');
 			App::import('Vendor', 'PHPExcel/Classes/PHPExcel/IOFactory');
-			exit;
 			// Excel2007形式(xlsx)テンプレートの読み込み
 			$reader = PHPExcel_IOFactory::createReader('Excel2007');
+			exit;
 			$template = realpath(WWW_ROOT);
 			$template .= '/excel/';
 			#曜日配列
