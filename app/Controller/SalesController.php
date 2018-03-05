@@ -72,7 +72,6 @@ class SalesController extends AppController{
 			App::import('Vendor', 'PHPExcel/Classes/PHPExcel/IOFactory');
 			// Excel2007形式(xlsx)テンプレートの読み込み
 			$reader = PHPExcel_IOFactory::createReader('Excel2007');
-			exit;
 			$template = realpath(WWW_ROOT);
 			$template .= '/excel/';
 			#曜日配列
@@ -90,6 +89,7 @@ class SalesController extends AppController{
 					echo "Error : 404";
 					exit;
 				}
+				exit;
 				$templatePath = $template.$data_name.'.xlsx';
 				$obj = $reader->load($templatePath);
 				######################################２店舗用###############################################
