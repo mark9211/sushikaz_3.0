@@ -70,6 +70,7 @@ class SalesController extends AppController{
 			// // エクセル出力用ライブラリ
 			App::import('Vendor', 'PHPExcel/Classes/PHPExcel');
 			App::import('Vendor', 'PHPExcel/Classes/PHPExcel/IOFactory');
+			exit;
 			// Excel2007形式(xlsx)テンプレートの読み込み
 			$reader = PHPExcel_IOFactory::createReader('Excel2007');
 			$template = realpath(WWW_ROOT);
@@ -91,7 +92,6 @@ class SalesController extends AppController{
 				}
 				$templatePath = $template.$data_name.'.xlsx';
 				$obj = $reader->load($templatePath);
-				exit;
 				######################################２店舗用###############################################
 				if($location['Location']['name']=='和光店'){
 					for ($i=1; $i <= 31; $i++) {
