@@ -91,6 +91,7 @@ class SalesController extends AppController{
 				}
 				$templatePath = $template.$data_name.'.xlsx';
 				$obj = $reader->load($templatePath);
+				exit;
 				######################################２店舗用###############################################
 				if($location['Location']['name']=='和光店'){
 					for ($i=1; $i <= 31; $i++) {
