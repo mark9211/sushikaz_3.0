@@ -91,10 +91,6 @@ class SalesController extends AppController{
 				}
 				$templatePath = $template.$data_name.'.xlsx';
 				$obj = $reader->load($templatePath);
-				# 年度と月
-				$obj->setActiveSheetIndex(0)
-					->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])));
-				exit;
 				######################################２店舗用###############################################
 				if($location['Location']['name']=='和光店'){
 					for ($i=1; $i <= 31; $i++) {
@@ -207,6 +203,9 @@ class SalesController extends AppController{
 					}
 					#########################################################################################
 				}else{
+					# 年度と月
+					$obj->setActiveSheetIndex(0)
+						->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])));
 					#総売上取得
 					$total_sales = $this->TotalSales->find('all', array(
 						'conditions' => array('TotalSales.location_id' => $location['Location']['id'], 'TotalSales.working_day LIKE' => '%'.$this->request->data['month'].'%')
