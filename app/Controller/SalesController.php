@@ -89,8 +89,10 @@ class SalesController extends AppController{
 					echo "Error : 404";
 					exit;
 				}
-				exit;
 				$templatePath = $template.$data_name.'.xlsx';
+				debug($reader);
+				debug($templatePath);
+				exit;
 				$obj = $reader->load($templatePath);
 				######################################２店舗用###############################################
 				if($location['Location']['name']=='和光店'){
