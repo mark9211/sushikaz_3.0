@@ -613,6 +613,8 @@ class SalesController extends AppController{
 								#20150807追記
 								$salaries = 0;
 								$late_salaries = 0;
+								#まかない
+								$makanai = 0;
 								#交通費
 								if(count($attendance_results) < 16){    //日ごと
 									if($member['Member']['compensation_daily']!=0){
@@ -655,6 +657,10 @@ class SalesController extends AppController{
 									if($total_sales!=null){
 										$special_fee += 500;
 									}
+									#賄い
+									if($attendance_result['AttendanceResult']['makanai']==1){
+										$makanai += 300;
+									}
 								}
 								#書き込み（店舗毎きりかえ）
 								#店舗毎分岐
@@ -668,7 +674,8 @@ class SalesController extends AppController{
 										->setCellValue('H'.$num, $salaries)
 										->setCellValue('I'.$num, $late_salaries)
 										->setCellValue('J'.$num, $special_fee)
-										->setCellValue('L'.$num, $compensation);
+										->setCellValue('L'.$num, $compensation)
+										->setCellValue('N'.$num, $makanai);
 								}elseif($location['Location']['name']=='赤羽店'){  //大入りなし
 									$obj->setActiveSheetIndex(0)
 										->setCellValue('C'.$num, $member['Member']['name'])
