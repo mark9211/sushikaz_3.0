@@ -1223,7 +1223,7 @@ class MemberProfilesController extends AppController{
             $sheet = $obj->getActiveSheet();
             $sheet->setTitle(date('Y年m月', strtotime($date)));
             # 税抜に金額修正する行
-            $num_arr = [23,24,25,26,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,51,52,53,54,55,56,57,58,59,60,61,64,65];
+            $num_arr = [23,24,25,26,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,52,53,54,55,56,57,58,59,60,61,64,65,66];
             foreach($data as $d){
                 $arr = explode(',',$d);
                 $num = $arr[0];
@@ -1723,7 +1723,9 @@ class MemberProfilesController extends AppController{
                     }
                     $this->set("other", $other_arr);
                     # 定額支出
-                    $expense_df_types = $this->ExpenseDfType->find('all');
+                    $expense_df_types = $this->ExpenseDfType->find('all', array(
+                        'order' => array('ExpenseDfType.rank')
+                    ));
                     $data_set = array();
                     $total_arr = array();
                     if($expense_df_types!=null){
