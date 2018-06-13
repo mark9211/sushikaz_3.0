@@ -1705,9 +1705,8 @@ class MemberProfilesController extends AppController{
                                 if($kaikake_fee!=null){
                                     $name = $kaikake_store['KaikakeStore']['name'];
                                     if($name=="ゴキブリ(ダスキン早稲田)"||$name=="ゴキブリ(ダスキン城北)"){
-                                        $name = "ゴキブリ防除(ダスキン)";
+                                        $name = "害虫駆除";
                                     }
-
                                     if(!isset($other_arr[$name][$association['Association']['id']])){
                                         $other_arr[$name][$association['Association']['id']] = 0;
                                     }
