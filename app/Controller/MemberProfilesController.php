@@ -1608,7 +1608,6 @@ class MemberProfilesController extends AppController{
                                     'conditions' => array('MonthlySalary.association_id' => $id, 'MonthlySalary.style' => $style, 'MonthlySalary.working_month' => $date)
                                 ));
                             }
-                            debug($monthly_salary);
                             # 配列きりかえ
                             if($style=="part"){
                                 $part_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
