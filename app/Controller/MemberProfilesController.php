@@ -1593,29 +1593,7 @@ class MemberProfilesController extends AppController{
                             # Empty処理
                             if($monthly_salary==null){
                                 $location['Location'] = $association['Location'];
-                                $result = $this->salesCalculator($location, $month);//$result = array('part'=>100, 'full'=>100, 'exception'=>100);
                                 $value = 0;
-                                // 和光
-                                if($id==3||$id==4){
-                                    $percent_arr = array(3=>0.25, 4=>0.75);
-                                    $full_num_arr = array(3=>1, 4=>2);
-                                    $total_wako_sales = $sales_arr[3]['total']+$sales_arr[4]['total'];
-                                    //PartTimer
-                                    if($style=="part"){
-                                        $exception = $result['exception']*$percent_arr[$id];
-                                        $percent = $sales_arr[$id]['total']/$total_wako_sales;
-                                        $value = ($result['part']-$result['exception'])*$percent+$exception;
-                                    }
-                                    //FullTimer
-                                    elseif($style=="full"){
-                                        # 社員(寿司/焼肉)
-                                        $value = $result['full'][$full_num_arr[$id]];
-                                        $value+=$result['full'][3]/2;
-                                    }
-                                }
-                                else{
-                                    $value = $result[$style];
-                                }
                                 # Insert
                                 $data = array('MonthlySalary' => array(
                                     'association_id' => $id,
