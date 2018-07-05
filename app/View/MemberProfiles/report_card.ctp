@@ -422,8 +422,8 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                             <?$id=$association['Association']['id'];?>
                                                             <td class="clickable">
                                                                 <span><?if(isset($full_salary[$id])){echo $full_salary[$id];$total+=$full_salary[$id];}?></span>
-                                                                <input class="form-control inputNumber visible" type="text" value="<?echo $full_salary[$id];?>" placeholder="金額を入力してください" style="display: none;">
-                                                                <input type="hidden" class="association" value="<?echo $id;?>">
+                                                                <input class="form-control inputNumber visible" type="text" value="<?= $full_salary[$id];?>" placeholder="金額を入力してください" style="display: none;">
+                                                                <input type="hidden" class="association" value="<?= $id;?>">
                                                                 <input type="hidden" class="type" value="full">
                                                                 <input type="hidden" class="model" value="MonthlySalary">
                                                             </td>
@@ -446,9 +446,31 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                             <?$id=$association['Association']['id'];?>
                                                             <td class="clickable">
                                                                 <span><?if(isset($part_salary[$id])){echo $part_salary[$id];$total+=$part_salary[$id];}?></span>
-                                                                <input class="form-control inputNumber visible" type="text" value="<?echo $part_salary[$id];?>" placeholder="金額を入力してください" style="display: none;">
-                                                                <input type="hidden" class="association" value="<?echo $id;?>">
+                                                                <input class="form-control inputNumber visible" type="text" value="<?= $part_salary[$id];?>" placeholder="金額を入力してください" style="display: none;">
+                                                                <input type="hidden" class="association" value="<?= $id;?>">
                                                                 <input type="hidden" class="type" value="part">
+                                                                <input type="hidden" class="model" value="MonthlySalary">
+                                                            </td>
+                                                        <?endforeach;?>
+                                                        <td class="totalSum">
+                                                            <?echo $total;?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #7FFF00!important">
+                                                            <?$num++;echo $num;?>
+                                                        </td>
+                                                        <td>
+                                                            福利厚生費
+                                                        </td>
+                                                        <?$total=0;?>
+                                                        <?foreach($associations as $association):?>
+                                                            <?$id=$association['Association']['id'];?>
+                                                            <td class="clickable">
+                                                                <span><?if(isset($fukuri_arr[$id])){echo $fukuri_arr[$id];$total+=$fukuri_arr[$id];}?></span>
+                                                                <input class="form-control inputNumber visible" type="text" value="<?= $fukuri_arr[$id];?>" placeholder="金額を入力してください" style="display: none;">
+                                                                <input type="hidden" class="association" value="<?= $id;?>">
+                                                                <input type="hidden" class="type" value="fukuri">
                                                                 <input type="hidden" class="model" value="MonthlySalary">
                                                             </td>
                                                         <?endforeach;?>

@@ -1582,8 +1582,8 @@ class MemberProfilesController extends AppController{
                     }
                     $this->set("summaries", $sales_arr);
                     # 給料手当
-                    $part_arr = array();$full_arr = array();
-                    $style_arr = array(0=>"full", 1=>"part");
+                    $part_arr = [];$full_arr = [];$fukuri_arr = [];
+                    $style_arr = array(0=>"full", 1=>"part", 2=>"fukuri");
                     foreach($associations as $association){
                         $id = $association['Association']['id'];
                         foreach($style_arr as $style){
@@ -1594,7 +1594,7 @@ class MemberProfilesController extends AppController{
                             if($monthly_salary==null){
                                 $location['Location'] = $association['Location'];
                                 $result = $this->salesCalculator($location, $month);//$result = array('part'=>100, 'full'=>100, 'exception'=>100);
-                                $value=0;
+                                $value = 0;
                                 // 和光
                                 if($id==3||$id==4){
                                     $percent_arr = array(3=>0.25, 4=>0.75);
@@ -1637,10 +1637,14 @@ class MemberProfilesController extends AppController{
                             elseif($style=="full"){
                                 $full_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
                             }
+                            elseif($style=="fukuri"){
+                                $fukuri_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
+                            }
                         }
                     }
                     $this->set("full_salary", $full_arr);
                     $this->set("part_salary", $part_arr);
+                    $this->set("fukuri", $fukuri_arr);
                     # 買掛支払
                     $kaikake_arr = array();
                     foreach($stocktaking_types as $stocktaking_type){
