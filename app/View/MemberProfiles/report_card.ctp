@@ -467,8 +467,8 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                         <?foreach($associations as $association):?>
                                                             <?$id=$association['Association']['id'];?>
                                                             <td class="clickable">
-                                                                <span><?if(isset($fukuri_arr[$id])){echo $fukuri_arr[$id];$total+=$fukuri_arr[$id];}?></span>
-                                                                <input class="form-control inputNumber visible" type="text" value="<?= $fukuri_arr[$id];?>" placeholder="金額を入力してください" style="display: none;">
+                                                                <span><?if(isset($fukuri[$id])){echo $fukuri[$id];$total+=$fukuri[$id];}?></span>
+                                                                <input class="form-control inputNumber visible" type="text" value="<?= $fukuri[$id];?>" placeholder="金額を入力してください" style="display: none;">
                                                                 <input type="hidden" class="association" value="<?= $id;?>">
                                                                 <input type="hidden" class="type" value="fukuri">
                                                                 <input type="hidden" class="model" value="MonthlySalary">
