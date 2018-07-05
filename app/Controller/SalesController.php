@@ -449,7 +449,7 @@ class SalesController extends AppController{
 										$day_hourly_wage = $member['Member']['hourly_wage'];
 									}
 									if ($result==true || $day=='日' || $day=='土') {
-										$hourly_wage = $day_hourly_wage+50;
+										$hourly_wage = $day_hourly_wage + 100;
 										$flag = 1;//休日フラグ
 									}else{
 										$hourly_wage = $day_hourly_wage;
