@@ -1610,13 +1610,28 @@ class MemberProfilesController extends AppController{
                             }
                             # 配列きりかえ
                             if($style=="part"){
-                                $part_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
+                                if(isset($monthly_salary['MonthlySalary']['fee'])){
+                                    $part_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
+                                }
+                                else{
+                                    $part_arr[$id] = 0;
+                                }
                             }
                             elseif($style=="full"){
-                                $full_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
+                                if(isset($monthly_salary['MonthlySalary']['fee'])){
+                                    $full_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
+                                }
+                                else{
+                                    $full_arr[$id] = 0;
+                                }
                             }
                             elseif($style=="fukuri"){
-                                $fukuri_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
+                                if(isset($monthly_salary['MonthlySalary']['fee'])){
+                                    $fukuri_arr[$id] = $monthly_salary['MonthlySalary']['fee'];
+                                }
+                                else{
+                                    $fukuri_arr[$id] = 0;
+                                }
                             }
                         }
                     }

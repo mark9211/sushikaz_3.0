@@ -548,7 +548,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <?endforeach;?>
                                                     <!-- END その他 -->
                                                     <!-- BEGIN 店内経費 -->
-                                                    <?$num=58;?>
+                                                    <?$num=59;?>
                                                     <tr>
                                                         <td>
                                                             <?=$num;?>
