@@ -1459,7 +1459,7 @@ class MemberProfilesController extends AppController{
                     # 支出先
                     $kaikake_arr = array();
                     $kaikake_stores = $this->KaikakeStore->find('all', array(
-                        'order' => array('KaikakeStore.type_id','KaikakeStore.rank')
+                        'order' => ['KaikakeStore.rank']
                     ));
                     $associations = $this->Association->find('all');
                     $this->set("association_arr", $associations);

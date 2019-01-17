@@ -67,7 +67,8 @@ class AdminController extends AppController{
             $data_set = array();
             foreach($stocktaking_types as $stocktaking_type){
                 $kaikake_stores = $this->KaikakeStore->find('all', array(
-                    'conditions' => array('KaikakeStore.type_id' => $stocktaking_type['StocktakingType']['id'])
+                    'conditions' => array('KaikakeStore.type_id' => $stocktaking_type['StocktakingType']['id']),
+                    'order' => ['KaikakeStore.rank' => 'asc'],
                 ));
                 $data_set2 = array();
                 foreach($kaikake_stores as $kaikake_store){

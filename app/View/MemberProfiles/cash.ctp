@@ -144,11 +144,10 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <?foreach($association_arr as $association):?>
                                                         <th><?echo $association['Location']['name'];?>（<?echo $association['Attribute']['name'];?>）</th>
                                                     <?endforeach;?>
-                                                    <th> 合計 </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?$num=0;$cell_arr=array(1=>5,2=>41,3=>53,4=>60,5=>65,6=>71);$type_arr=array();?>
+                                                    <?$num=0;$cell_arr=array(1=>5,2=>50,3=>64,4=>73,5=>78,6=>84);$type_arr=array();?>
                                                     <?foreach($kaikake_stores as $kaikake_store):?>
                                                         <tr>
                                                             <?$type=$kaikake_store['Type'];?>
@@ -172,10 +171,6 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                                     <td>×</td>
                                                                 <?endif;?>
                                                             <?endforeach;?>
-
-                                                            <td class="totalSum">
-                                                                <?if(isset($kaikake_store['Total'])){echo $kaikake_store['Total'];}?>
-                                                            </td>
                                                         </tr>
                                                     <?endforeach;?>
                                                 </tbody>
@@ -195,7 +190,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                     <div class="page-content-inner">
                         <div class="row">
                             <?foreach($stocking_types as $key => $stocking_type_arr):?>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
                                     <div class="portlet light ">
                                         <div class="portlet-title">
