@@ -1223,7 +1223,7 @@ class MemberProfilesController extends AppController{
             $sheet = $obj->getActiveSheet();
             $sheet->setTitle(date('Y年m月', strtotime($date)));
             # 税抜に金額修正する行
-            $num_arr = [23,24,25,26,33,34,35,36,37,38,39,40,41,42,43,44,45,46,53,54,55,56,57,58,59,60,61,64,65,66];
+            $num_arr = [23,24,25,26,33,34,35,36,37,38,39,40,41,42,43,44,45,46,53,54,55,56,57,58,59,62,63,64,65,66,67,68];
             foreach($data as $d){
                 $arr = explode(',',$d);
                 $num = $arr[0];
@@ -1235,14 +1235,16 @@ class MemberProfilesController extends AppController{
                         ->setCellValue('E'.$num, floor($arr[2]/1.08))
                         ->setCellValue('G'.$num, floor($arr[3]/1.08))
                         ->setCellValue('I'.$num, floor($arr[4]/1.08))
-                        ->setCellValue('K'.$num, floor($arr[5]/1.08));
+                        ->setCellValue('K'.$num, floor($arr[5]/1.08))
+                        ->setCellValue('O'.$num, floor($arr[6]/1.08));
                 }
                 else{
                     $obj->setActiveSheetIndex(0)
                         ->setCellValue('E'.$num, floor($arr[2]))
                         ->setCellValue('G'.$num, floor($arr[3]))
                         ->setCellValue('I'.$num, floor($arr[4]))
-                        ->setCellValue('K'.$num, floor($arr[5]));
+                        ->setCellValue('K'.$num, floor($arr[5]))
+                        ->setCellValue('O'.$num, floor($arr[6]));
                 }
             }
             // Excel2007
