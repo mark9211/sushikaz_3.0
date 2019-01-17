@@ -1318,22 +1318,26 @@ class MemberProfilesController extends AppController{
                     if(isset($a['last'][2])){ $last2=$a['last'][2]; }else{ $last2=0; }
                     if(isset($a['last'][3])){ $last3=$a['last'][3]; }else{ $last3=0; }
                     if(isset($a['last'][4])){ $last4=$a['last'][4]; }else{ $last4=0; }
+                    if(isset($a['last'][5])){ $last5=$a['last'][5]; }else{ $last5=0; }
                     $obj->setActiveSheetIndex(0)
                         ->setCellValue('E'.$r, $last1)
                         ->setCellValue('F'.$r, $last2)
                         ->setCellValue('G'.$r, $last3)
-                        ->setCellValue('H'.$r, $last4);
+                        ->setCellValue('H'.$r, $last4)
+                        ->setCellValue('I'.$r, $last5);
                     $r++;
                     # this
                     if(isset($a['this'][1])){ $this1=$a['this'][1]; }else{ $this1=0; }
                     if(isset($a['this'][2])){ $this2=$a['this'][2]; }else{ $this2=0; }
                     if(isset($a['this'][3])){ $this3=$a['this'][3]; }else{ $this3=0; }
                     if(isset($a['this'][4])){ $this4=$a['this'][4]; }else{ $this4=0; }
+                    if(isset($a['this'][5])){ $this5=$a['this'][5]; }else{ $this5=0; }
                     $obj->setActiveSheetIndex(0)
                         ->setCellValue('E'.$r, $this1)
                         ->setCellValue('F'.$r, $this2)
                         ->setCellValue('G'.$r, $this3)
-                        ->setCellValue('H'.$r, $this4);
+                        ->setCellValue('H'.$r, $this4)
+                        ->setCellValue('I'.$r, $this5);
                 }
             }
             // Excel2007
