@@ -1295,7 +1295,8 @@ class MemberProfilesController extends AppController{
                     ->setCellValue('E'.$num, $arr[3])
                     ->setCellValue('F'.$num, $arr[4])
                     ->setCellValue('G'.$num, $arr[5])
-                    ->setCellValue('H'.$num, $arr[6]);
+                    ->setCellValue('H'.$num, $arr[6])
+                    ->setCellValue('I'.$num, $arr[7]);
             }
             # 棚卸
             $this->loadModel("Stocktaking");
