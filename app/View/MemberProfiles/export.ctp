@@ -138,6 +138,7 @@ echo $this->Html->script('assets/pages/scripts/components-date-time-pickers.min.
                                                 <option value="1">池袋店</option>
                                                 <option value="2">赤羽店</option>
                                                 <option value="3">和光店</option>
+                                                <option value="4">東池袋店</option>
                                             </select>
                                             <!-- /input-group -->
 											<span class="help-block" style="width: 140px;">
