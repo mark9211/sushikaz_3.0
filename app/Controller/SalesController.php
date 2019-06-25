@@ -1100,21 +1100,22 @@ class SalesController extends AppController{
 				}
 				$r=5;
 				unset($arr[6]);     //その他！
-				debug($arr);exit;
 				foreach($arr as $key => $a){
 					# last
 					$obj->setActiveSheetIndex(0)
 						->setCellValue('D'.$r, $a['last'][1])
 						->setCellValue('E'.$r, $a['last'][2])
 						->setCellValue('F'.$r, $a['last'][3])
-						->setCellValue('G'.$r, $a['last'][4]);
+						->setCellValue('G'.$r, $a['last'][4])
+						->setCellValue('H'.$r, $a['last'][5]);
 					$r++;
 					# this
 					$obj->setActiveSheetIndex(0)
 						->setCellValue('D'.$r, $a['this'][1])
 						->setCellValue('E'.$r, $a['this'][2])
 						->setCellValue('F'.$r, $a['this'][3])
-						->setCellValue('G'.$r, $a['this'][4]);
+						->setCellValue('G'.$r, $a['this'][4])
+						->setCellValue('H'.$r, $a['this'][5]);
 					$r++;
 				}
 
