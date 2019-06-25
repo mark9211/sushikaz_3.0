@@ -327,6 +327,7 @@ class SalesController extends AppController{
 						$expenses = $this->Expense->find('all', array(
 							'conditions' => array('Expense.location_id' => $location['Location']['id'], 'Expense.working_day' => $working_day)
 						));
+						debug($expenses);exit;
 						if($expenses!=null){
 							#種類別累計計算
 							$expense_arr_two = array();
