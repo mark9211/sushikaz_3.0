@@ -1419,7 +1419,7 @@ class MemberProfilesController extends AppController{
                         ));
                         if($expenses_types!=null){
                             foreach($expenses_types as $expenses_type){
-                                # location_id=>association_id
+                                # location_id => association_id
                                 $location_id = $expenses_type['ExpenseType']['location_id'];
                                 $associations = $this->Association->find('all', array('conditions' => array('Association.location_id' => $location_id)));
                                 $association_id_arr = array();

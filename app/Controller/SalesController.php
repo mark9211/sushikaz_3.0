@@ -742,7 +742,8 @@ class SalesController extends AppController{
 							->setCellValue('F'.$row_number, $payroll['Payroll']['kitchen']);
 					}
 				}
-			}elseif($this->request->data['data_type']==5){
+			}
+			elseif($this->request->data['data_type']==5){
 				//店舗毎エクセルシート切り替え
 				if($location['Location']['name']=='池袋店'){
 					$data_name = 'monthly-report-purchase-ikebukuro';
@@ -841,7 +842,8 @@ class SalesController extends AppController{
 						->setCellValue('I'.$row_number, $neta)
 						->setCellValue('K'.$row_number, $sake);
 				}
-			}elseif($this->request->data['data_type']==6){
+			}
+			elseif($this->request->data['data_type']==6){
 				//店舗毎エクセルシート切り替え
 				if($location['Location']['name']=='池袋店'){
 					$data_name = 'monthly-report-saekirate-ikebukuro';
@@ -941,7 +943,8 @@ class SalesController extends AppController{
 						->setCellValue('D'.$row_number, $drink_sales)
 						->setCellValue('E'.$row_number, $drink_purchases);
 				}
-			}elseif($this->request->data['data_type']==7){
+			}
+			elseif($this->request->data['data_type']==7){
 				//店舗毎エクセルシート切り替え
 				if($location['Location']['name']=='池袋店'){
 					$data_name = 'monthly-report-mix-ikebukuro';
@@ -1097,6 +1100,7 @@ class SalesController extends AppController{
 				}
 				$r=5;
 				unset($arr[6]);     //その他！
+				debug($arr);exit;
 				foreach($arr as $key => $a){
 					# last
 					$obj->setActiveSheetIndex(0)
