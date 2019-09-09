@@ -147,7 +147,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?$num=0;$cell_arr=array(1=>5,2=>50,3=>69,4=>78,5=>83,6=>92);$type_arr=array();?>
+                                                    <?$num=0;$cell_arr=array(1=>5,2=>47,3=>66,4=>75,5=>81,6=>90);$type_arr=array();?>
                                                     <?foreach($kaikake_stores as $kaikake_store):?>
                                                         <?
                                                         if(in_array(true,$kaikake_store['IntermediateOne'])==false){ continue; }
