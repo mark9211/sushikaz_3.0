@@ -1665,7 +1665,7 @@ class MemberProfilesController extends AppController{
                             ));
                             if($stocktaking!=null){
                                 $diff = $stocktaking['Stocktaking']['last_month']-$stocktaking['Stocktaking']['this_month'];
-                                //debug($kaikake_arr[$stocktaking_type['StocktakingType']['name']][$association['Association']['id']]);
+                                debug($kaikake_arr[$stocktaking_type['StocktakingType']['name']][$association['Association']['id']]);
                                 if(isset($kaikake_arr[$stocktaking_type['StocktakingType']['name']][$association['Association']['id']])){
                                     $kaikake_arr[$stocktaking_type['StocktakingType']['name']][$association['Association']['id']] += $diff;
                                 }
