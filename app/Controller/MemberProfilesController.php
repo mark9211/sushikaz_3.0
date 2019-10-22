@@ -1417,7 +1417,6 @@ class MemberProfilesController extends AppController{
                         $expenses_types = $this->ExpenseType->find('all', array(
                             'conditions' => array('ExpenseType.name' => $v['name']),
                         ));
-                        debug($expenses_types);
                         if($expenses_types!=null){
                             foreach($expenses_types as $expenses_type){
                                 # location_id => association_id
@@ -1498,7 +1497,6 @@ class MemberProfilesController extends AppController{
                         }
                         $kaikake_arr[] = $kaikake_store;
                     }
-                    //debug($kaikake_arr);
                     $this->set("kaikake_stores", $kaikake_arr);
                     # 棚卸額
                     $association_arr = array();
