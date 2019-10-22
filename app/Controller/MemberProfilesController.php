@@ -1417,6 +1417,7 @@ class MemberProfilesController extends AppController{
                         $expenses_types = $this->ExpenseType->find('all', array(
                             'conditions' => array('ExpenseType.name' => $v['name']),
                         ));
+                        debug($expenses_types);
                         if($expenses_types!=null){
                             foreach($expenses_types as $expenses_type){
                                 # location_id => association_id
