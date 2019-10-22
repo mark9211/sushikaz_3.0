@@ -1412,7 +1412,7 @@ class MemberProfilesController extends AppController{
                     $this->set("date", $date);
                     $month = date('Y-m', strtotime($date));
                     # 店内経費
-                    $var = array(0=>array("name"=>"野菜", "store_id"=>25), 1=>array("name"=>"ネタ", "store_id"=>26), 2=>array("name"=>"飲料", "store_id"=>33), 3=>array("name"=>"調味料", "store_id"=>36), 4=>array("name"=>"消耗品", "store_id"=>39));
+                    $var = array(0=>array("name"=>"野菜", "store_id"=>25), 1=>array("name"=>"ネタ", "store_id"=>26), 2=>array("name"=>"飲料", "store_id"=>33), 3=>array("name"=>"飲料(酒以外)", "store_id"=>68), 4=>array("name"=>"調味料", "store_id"=>36), 5=>array("name"=>"消耗品", "store_id"=>39));
                     foreach($var as $v){
                         $expenses_types = $this->ExpenseType->find('all', array(
                             'conditions' => array('ExpenseType.name' => $v['name']),
