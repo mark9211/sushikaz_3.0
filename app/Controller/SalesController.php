@@ -304,13 +304,13 @@ class SalesController extends AppController{
 				$working_days = $this->ReceiptSummary->getWorkingDay($location['Location']['id'], $this->request->data['month']);
 				if($working_days!=null){
 					foreach($working_days as $working_day){
-						//曜日取得
+						# 曜日取得
 						$day = $weekday[date('w', strtotime($working_day))];
-						//開始番号設定
+						# 開始番号設定
 						$row_number = date('j', strtotime($working_day)) + 4;
-						#レシートサマリ
+						# レシートサマリ
 						$receipt_summary = $this->ReceiptSummary->dailySummarize($location['Location']['id'], $working_day);
-						#セルにInsert
+						# セルにInsert
 						$obj->setActiveSheetIndex(0)
 							->setCellValue('C'.$row_number, $day)
 							->setCellValue('D'.$row_number, $receipt_summary['total'])
@@ -318,17 +318,12 @@ class SalesController extends AppController{
 							->setCellValue('U'.$row_number, $receipt_summary['voucher'])
 							->setCellValue('V'.$row_number, $receipt_summary['other'])
 							->setCellValue('Z'.$row_number, $receipt_summary['discount']);
-						#売掛集金if文
-						if($location['Location']['name']=='和光店'){
-							$obj->setActiveSheetIndex(0)
-								->setCellValue('X'.$row_number, 0);
-						}
-						#支出
+						# 支出
 						$expenses = $this->Expense->find('all', array(
 							'conditions' => array('Expense.location_id' => $location['Location']['id'], 'Expense.working_day' => $working_day)
 						));
 						if($expenses!=null){
-							#種類別累計計算
+							# 種類別累計計算
 							$expense_arr_two = array();
 							foreach ($expenses as $expense){
 								if(isset($expense_arr_two[$expense['Type']['id']])){
@@ -337,7 +332,7 @@ class SalesController extends AppController{
 									$expense_arr_two[$expense['Type']['id']] = (int)$expense['Expense']['fee'];
 								}
 							}
-							#挿入
+							# 挿入
 							foreach($expense_arr_two as $key => $e){
 								$obj->setActiveSheetIndex(0)
 									->setCellValue($expense_arr[$key].$row_number, $e);
@@ -352,9 +347,8 @@ class SalesController extends AppController{
 							],
 							'group' => ['AddCash.working_day']
 						));
-						debug($add_cashes);
+						if($add_cashes!=null){ $obj->setActiveSheetIndex(0)->setCellValue('X'.$row_number, $add_cashes[0]); }
 					}
-					exit;
 				}
 			}
 			elseif($this->request->data['data_type']==3){
