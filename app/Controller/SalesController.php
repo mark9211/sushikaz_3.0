@@ -354,6 +354,7 @@ class SalesController extends AppController{
 						));
 						debug($add_cashes);
 					}
+					exit;
 				}
 			}
 			elseif($this->request->data['data_type']==3){
