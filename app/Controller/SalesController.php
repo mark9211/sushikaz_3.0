@@ -74,7 +74,7 @@ class SalesController extends AppController{
 			$reader = PHPExcel_IOFactory::createReader('Excel2007');
 			$template = realpath(WWW_ROOT);
 			$template .= '/excel/';
-			#曜日配列
+			# 曜日配列
 			$weekday = array( "日", "月", "火", "水", "木", "金", "土" );
 			# 全店or各店
 			if($this->request->data['data_type']==1){
@@ -343,6 +343,16 @@ class SalesController extends AppController{
 									->setCellValue($expense_arr[$key].$row_number, $e);
 							}
 						}
+						#入金
+						$add_cashes = $this->AddCash->find('all', array(
+							'fields' => ['sum(AddCash.fee) as fee'],
+							'conditions' => [
+								'AddCash.location_id' => $location['Location']['id'],
+								'AddCash.working_day' => $working_day
+							],
+							'group' => ['AddCash.working_day']
+						));
+						debug($add_cashes);
 					}
 				}
 			}
