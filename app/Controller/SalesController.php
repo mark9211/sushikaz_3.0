@@ -344,7 +344,7 @@ class SalesController extends AppController{
 							}
 						}
 						#入金
-						$add_cashes = $this->AddCash->find('all', array(
+						$add_cashes = $this->AddCash->find('first', array(
 							'fields' => ['sum(AddCash.fee) as fee'],
 							'conditions' => [
 								'AddCash.location_id' => $location['Location']['id'],
