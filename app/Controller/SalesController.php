@@ -353,11 +353,6 @@ class SalesController extends AppController{
 							'group' => ['AddCash.working_day']
 						));
 						debug($add_cashes);
-						$add_cashes = $this->AddCash->find('all', array(
-							'conditions' => array('AddCash.location_id' => $location['Location']['id'], 'AddCash.working_day' => $working_day)
-						));
-						debug($add_cashes);
-						exit;
 					}
 				}
 			}
