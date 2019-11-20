@@ -353,6 +353,7 @@ class SalesController extends AppController{
 							'group' => ['AddCash.working_day']
 						));
 						debug($add_cashes);
+						exit;
 					}
 				}
 			}
