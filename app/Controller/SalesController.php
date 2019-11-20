@@ -338,6 +338,16 @@ class SalesController extends AppController{
 									->setCellValue($expense_arr[$key].$row_number, $e);
 							}
 						}
+						#入金
+						$add_cashes = $this->AddCash->find('first', array(
+							'fields' => ['sum(AddCash.fee) as fee'],
+							'conditions' => [
+								'AddCash.location_id' => $location['Location']['id'],
+								'AddCash.working_day' => $working_day
+							],
+							'group' => ['AddCash.working_day']
+						));
+						if($add_cashes!=null){ $obj->setActiveSheetIndex(0)->setCellValue('X'.$row_number, $add_cashes[0]['fee']); }
 					}
 				}
 			}
