@@ -76,19 +76,10 @@ class SalesController extends AppController{
 			$template .= '/excel/';
 			# 曜日配列
 			$weekday = array( "日", "月", "火", "水", "木", "金", "土" );
-			# 全店or各店
+			# ラジオ切り替え
 			if($this->request->data['data_type']==1){
-				//店舗毎エクセルシート切り替え
-				if($location['Location']['name']=='池袋店'){
-					$data_name = 'monthly-report-sales-ikebukuro';
-				}elseif($location['Location']['name']=='赤羽店'){
-					$data_name = 'monthly-report-sales-akabane';
-				}elseif($location['Location']['name']=='和光店'){
-					$data_name = 'monthly-report-sales-wako';
-				}else{
-					echo "Error : 404";
-					exit;
-				}
+				# 店舗毎エクセルシート切り替え
+				$data_name = 'monthly-report-sales';
 				$templatePath = $template.$data_name.'.xlsx';
 				$obj = $reader->load($templatePath);
 				# 年度と月
@@ -113,191 +104,21 @@ class SalesController extends AppController{
 					'group' => ['ReceiptSummary.working_day'],
 					'order' => ['ReceiptSummary.working_day']
 				]);
-				debug($receipt_summaries);
-				exit;
-
-				if($location['Location']['name']=='和光店'){
-					for ($i=1; $i <= 31; $i++) {
-						$working_day = $this->request->data['month'] . '-' . $i;
+				if($receipt_summaries!=null){
+					foreach ($receipt_summaries as $receipt_summary) {
+						# 営業日
+						$working_day = $receipt_summary['ReceiptSummary']['working_day'];
+						# 曜日取得
 						$day = $weekday[date('w', strtotime($working_day))];
+						# 開始番号設定
 						$row_number = date('j', strtotime($working_day)) + 4;
-						#売上内訳
-						$this->Sales->recursive = 2;
-						$sales = $this->Sales->find('all', array(
-							'conditions' => array('Sales.location_id' => $location['Location']['id'], 'Sales.working_day' => $working_day)
-						));
-						if($sales!=null){
-							$attribute_sales = $this->Sales->diviseSushiYakinikuArray($sales);
-							$divise_sales = $this->Sales->diviseSushiYakiniku($sales);
-							#寿司
-							$sushi_sales = array();
-							$sushi_sales['itaba'] = 0;
-							$sushi_sales['yakiba'] = 0;
-							$sushi_sales['drink'] = 0;
-							foreach($attribute_sales['寿司'] as $attribute_sales_one){
-								#板場
-								if($attribute_sales_one['Type']['name']=='板場売上'){
-									$sushi_sales['itaba'] = $attribute_sales_one['Sales']['fee'];
-								}
-								#焼き場
-								if($attribute_sales_one['Type']['name']=='焼場売上'){
-									$sushi_sales['yakiba'] = $attribute_sales_one['Sales']['fee'];
-								}
-								#飲料
-								if($attribute_sales_one['Type']['name']=='飲料売上'){
-									$sushi_sales['drink'] = $attribute_sales_one['Sales']['fee'];
-								}
-								#共同（焼場に加算）
-								if($attribute_sales_one['Type']['name']=='共同売上'){
-									$sushi_sales['yakiba'] += $attribute_sales_one['Sales']['fee'];
-								}
-							}
-							#焼肉
-							$yakiniku_sales = array();
-							$yakiniku_sales['chori'] = 0;
-							$yakiniku_sales['drink'] = 0;
-							foreach($attribute_sales['焼肉'] as $attribute_sales_one){
-								#調理場
-								if($attribute_sales_one['Type']['name']=='調理場売上'){
-									$yakiniku_sales['chori'] = $attribute_sales_one['Sales']['fee'];
-								}
-								#飲料
-								if($attribute_sales_one['Type']['name']=='飲料売上'){
-									$yakiniku_sales['drink'] = $attribute_sales_one['Sales']['fee'];
-								}
-								#共同（調理場に加算）
-								if($attribute_sales_one['Type']['name']=='共同売上'){
-									$yakiniku_sales['chori'] += $attribute_sales_one['Sales']['fee'];
-								}
-							}
-							#ランチ売上
-							$sales_lunches = $this->SalesLunch->find('all', array(
-								'conditions' => array('SalesLunch.location_id' => $location['Location']['id'], 'SalesLunch.working_day' => $working_day)
-							));
-							if($sales_lunches!=null){
-								$lunch = array();
-								$lunch['sushi'] = 0;
-								$lunch['yakiniku'] = 0;
-								foreach($sales_lunches as $sales_lunch){
-									#寿司
-									if($sales_lunch['Attribute']['name']=='寿司'){
-										$lunch['sushi'] = $sales_lunch['SalesLunch']['fee'];
-									}
-									#焼肉
-									if($sales_lunch['Attribute']['name']=='焼肉'){
-										$lunch['yakiniku'] = $sales_lunch['SalesLunch']['fee'];
-									}
-								}
-								#ディナー売上
-								$dinner_sales = $this->Sales->calculateDinnerSales($sales_lunches, $divise_sales);
-								#客数
-								$this->CustomerCount->recursive = 2;
-								$customer_counts = $this->CustomerCount->find('all', array(
-									'conditions' => array('CustomerCount.location_id' => $location['Location']['id'], 'working_day' => $working_day)
-								));
-								$divise_customers = $this->CustomerCount->diviseLunchDinner($customer_counts);
-
-								//page 1
-								$obj->setActiveSheetIndex(0)
-									->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])))
-									->setCellValue('C'.$row_number, $day)
-									->setCellValue('D'.$row_number, floor($lunch['sushi']*1.08))
-									->setCellValue('E'.$row_number, $divise_customers['lunch']['寿司'])
-									->setCellValue('F'.$row_number, floor($dinner_sales['寿司']*1.08))
-									->setCellValue('G'.$row_number, $divise_customers['dinner']['寿司'])
-									->setCellValue('J'.$row_number, floor($sushi_sales['itaba']*1.08))
-									->setCellValue('K'.$row_number, floor($sushi_sales['yakiba']*1.08))
-									->setCellValue('L'.$row_number, floor($sushi_sales['drink']*1.08));
-								//page 2
-								$obj->setActiveSheetIndex(1)
-									->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])))
-									->setCellValue('C'.$row_number, $day)
-									->setCellValue('D'.$row_number, floor($lunch['yakiniku']*1.08))
-									->setCellValue('E'.$row_number, $divise_customers['lunch']['焼肉'])
-									->setCellValue('F'.$row_number, floor($dinner_sales['焼肉']*1.08))
-									->setCellValue('G'.$row_number, $divise_customers['dinner']['焼肉'])
-									->setCellValue('J'.$row_number, floor($yakiniku_sales['chori']*1.08))
-									->setCellValue('K'.$row_number, floor($yakiniku_sales['drink']*1.08));
-								//page 3
-								$obj->setActiveSheetIndex(2)
-									->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])))
-									->setCellValue('C'.$row_number, $day);
-							}
-						}
-					}
-					#########################################################################################
-				}
-				else{
-					# 総売上取得
-					$total_sales = $this->TotalSales->find('all', array(
-						'conditions' => array('TotalSales.location_id' => $location['Location']['id'], 'TotalSales.working_day LIKE' => '%'.$this->request->data['month'].'%')
-					));
-					foreach ($total_sales as $total_sales_one) {
-						#営業日
-						$working_day = $total_sales_one['TotalSales']['working_day'];
-						//曜日取得
-						$day = $weekday[date('w', strtotime($working_day))];
-						//開始番号設定
-						$row_number = date('j', strtotime($working_day)) + 4;
-						#伝票番号
-						$maisu = 0;
-						$slip_numbers = $this->SlipNumber->find('all', array(
-							'conditions' => array('SlipNumber.location_id' => $location['Location']['id'], 'SlipNumber.working_day' => $working_day)
-						));
-						if($slip_numbers!=null){
-							foreach($slip_numbers as $slip_number){
-								if($slip_number['Type']['name']=='出前'){
-									$maisu = $slip_number['SlipNumber']['end_number'] - $slip_number['SlipNumber']['start_number'] + 1;
-								}
-							}
-						}
-						#シート毎分岐
-						if($location['Location']['name']=='池袋店'){
-							$obj->setActiveSheetIndex(0)
-								->setCellValue('C'.$row_number, $day)
-								->setCellValue('E'.$row_number, $total_sales_one['TotalSales']['customer_counts'])
-								->setCellValue('H'.$row_number, $total_sales_one['TotalSales']['demae_cnt']);
-						}elseif($location['Location']['name']=='赤羽店'){
-							$obj->setActiveSheetIndex(0)
-								->setCellValue('C'.$row_number, $day)
-								->setCellValue('E'.$row_number, $total_sales_one['TotalSales']['customer_counts'])
-								->setCellValue('I'.$row_number, $maisu);
-						}
-						#内訳
-						$tennai = 0;
-						$demae = 0;
-						$drink = 0;
-						$itaba = 0;
-						$cyubo = 0;
-						$sales = $this->Sales->find('all', array(
-							'conditions' => array('Sales.location_id' => $location['Location']['id'], 'Sales.working_day' => $working_day)
-						));
-						foreach($sales as $sales_one){
-							if($sales_one['Type']['name']=='店内売上'){
-								$tennai = $sales_one['Sales']['fee'];
-							}elseif($sales_one['Type']['name']=='出前売上'){
-								$demae = $sales_one['Sales']['fee'];
-							}elseif($sales_one['Type']['name']=='飲料売上'){
-								$drink = $sales_one['Sales']['fee'];
-							}elseif($sales_one['Type']['name']=='板場売上'){
-								$itaba = $sales_one['Sales']['fee'];
-							}elseif($sales_one['Type']['name']=='厨房売上'){
-								$cyubo = $sales_one['Sales']['fee'];
-							}
-						}
-						#店舗毎分岐
-						if($location['Location']['name']=='池袋店'){
-							$obj->setActiveSheetIndex(0)
-								->setCellValue('D'.$row_number, $tennai)
-								->setCellValue('F'.$row_number, $drink)
-								->setCellValue('G'.$row_number, $demae);
-						}elseif($location['Location']['name']=='赤羽店'){
-							$obj->setActiveSheetIndex(0)
-								->setCellValue('D'.$row_number, $itaba)
-								->setCellValue('F'.$row_number, $cyubo)
-								->setCellValue('G'.$row_number, $drink)
-								->setCellValue('H'.$row_number, $demae);
-						}
+						# シート入力
+						$obj->setActiveSheetIndex(0)
+							->setCellValue('C'.$row_number, $day)
+							->setCellValue('E'.$row_number, $receipt_summary[0]['takeout'])
+							->setCellValue('F'.$row_number, $receipt_summary[0]['total'])
+							->setCellValue('H'.$row_number, $receipt_summary[0]['food'])
+							->setCellValue('I'.$row_number, $receipt_summary[0]['drink']);
 					}
 				}
 			}
