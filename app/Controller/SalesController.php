@@ -100,6 +100,7 @@ class SalesController extends AppController{
 				# 売上取得
 				$receipt_summaries = $this->ReceiptSummary->find('all', [
 					'fields' => [
+						'ReceiptSummary.working_day as working_day',
 						'sum(ReceiptSummary.total) as total',
 						'sum(CASE WHEN ReceiptSummary.breakdown_name = "ランチ" THEN ReceiptSummary.total ELSE 0 END) as lunch',
 						'sum(CASE WHEN ReceiptSummary.breakdown_name = "アラカルト" THEN ReceiptSummary.total ELSE 0 END) as dinner',
