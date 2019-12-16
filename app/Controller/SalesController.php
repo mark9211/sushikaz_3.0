@@ -98,7 +98,7 @@ class SalesController extends AppController{
 				$obj->setActiveSheetIndex(0)
 					->setCellValue('I2', $location['Location']['name']);
 				# 売上取得
-				$receipt_summaries = $this->ReceitSummary->find('all', array(
+				$receipt_summaries = $this->ReceiptSummary->find('all', [
 					'fields' => [
 						'sum(ReceiptSummary.total) as total',
 						'sum(CASE WHEN ReceiptSummary.breakdown_name = "ランチ" THEN ReceiptSummary.total ELSE 0 END) as lunch',
@@ -111,7 +111,7 @@ class SalesController extends AppController{
 					'conditions' => ['ReceiptSummary.location_id' => $location['Location']['id'], 'ReceiptSummary.working_day LIKE' => '%'.$this->request->data['month'].'%'],
 					'group' => ['ReceiptSummary.working_day'],
 					'order' => ['ReceiptSummary.working_day']
-				));
+				]);
 				debug($receipt_summaries);
 				exit;
 
