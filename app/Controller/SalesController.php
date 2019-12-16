@@ -91,7 +91,30 @@ class SalesController extends AppController{
 				}
 				$templatePath = $template.$data_name.'.xlsx';
 				$obj = $reader->load($templatePath);
-				######################################２店舗用###############################################
+				# 年度と月
+				$obj->setActiveSheetIndex(0)
+					->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])));
+				# 店名
+				$obj->setActiveSheetIndex(0)
+					->setCellValue('I2', $location['Location']['name']);
+				# 売上取得
+				$receipt_summaries = $this->ReceitSummary->find('all', array(
+					'fields' => [
+						'sum(ReceiptSummary.total) as total',
+						'sum(CASE WHEN ReceiptSummary.breakdown_name = "ランチ" THEN ReceiptSummary.total ELSE 0 END) as lunch',
+						'sum(CASE WHEN ReceiptSummary.breakdown_name = "アラカルト" THEN ReceiptSummary.total ELSE 0 END) as dinner',
+						'sum(CASE WHEN ReceiptSummary.breakdown_name = "コース" THEN ReceiptSummary.total ELSE 0 END) as course',
+						'sum(CASE WHEN ReceiptSummary.breakdown_name = "テイクアウト" THEN ReceiptSummary.total ELSE 0 END) as takeout',
+						'sum(ReceiptSummary.food) as food',
+						'sum(ReceiptSummary.drink) as drink',
+					],
+					'conditions' => ['ReceiptSummary.location_id' => $location['Location']['id'], 'ReceiptSummary.working_day LIKE' => '%'.$this->request->data['month'].'%'],
+					'group' => ['ReceiptSummary.working_day'],
+					'order' => ['ReceiptSummary.working_day']
+				));
+				debug($receipt_summaries);
+				exit;
+
 				if($location['Location']['name']=='和光店'){
 					for ($i=1; $i <= 31; $i++) {
 						$working_day = $this->request->data['month'] . '-' . $i;
@@ -202,11 +225,9 @@ class SalesController extends AppController{
 						}
 					}
 					#########################################################################################
-				}else{
-					# 年度と月
-					$obj->setActiveSheetIndex(0)
-						->setCellValue('B2', date('Y年m月', strtotime($this->request->data['month'])));
-					#総売上取得
+				}
+				else{
+					# 総売上取得
 					$total_sales = $this->TotalSales->find('all', array(
 						'conditions' => array('TotalSales.location_id' => $location['Location']['id'], 'TotalSales.working_day LIKE' => '%'.$this->request->data['month'].'%')
 					));
