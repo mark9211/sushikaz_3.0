@@ -41,7 +41,20 @@ class AdminController extends AppController{
         # POST
         if($this->request->is('post')){
             debug($this->request->data);
-            exit;
+            # パラメーター変数格納
+            $rank = $this->request->data['rank'];
+            $type_id = $this->request->data['type_id'];
+            $name = $this->request->data['name'];
+            # 入力値検証
+            if(!is_numeric($rank)){
+                $this->Session->setFlash("追加エラー：表示順を正しく設定してください");
+            }
+            if(!is_numeric($type_id)){
+                $this->Session->setFlash("追加エラー：種類を正しく設定してください");
+            }
+            if(is_null($name)){
+                $this->Session->setFlash("追加エラー：買掛先名を正しく設定してください");
+            }
         }
         else{
             # 買掛先種別
