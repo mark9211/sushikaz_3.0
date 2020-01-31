@@ -31,6 +31,13 @@ class AdminController extends AppController{
     }
 
     public function index(){
+    }
+
+    public function kaikake_store(){
+        # 使用モデル
+        $this->loadModel("StocktakingType");
+        $this->loadModel("KaikakeStore");
+        $this->loadModel("IntermediateOne");
 
     }
 
