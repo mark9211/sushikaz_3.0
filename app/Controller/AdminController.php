@@ -19,6 +19,9 @@ class AdminController extends AppController{
         #使用モデル
         $this->loadModel("Location");
         $this->loadModel("Association");
+        $this->loadModel("StocktakingType");
+        $this->loadModel("KaikakeStore");
+        $this->loadModel("IntermediateOne");
         #ログイン処理
         if(!$this->Session->check('myData')){
             #loginページへ
@@ -34,10 +37,6 @@ class AdminController extends AppController{
     }
 
     public function kaikake_store(){
-        # 使用モデル
-        $this->loadModel("StocktakingType");
-        $this->loadModel("KaikakeStore");
-        $this->loadModel("IntermediateOne");
         # POST
         if($this->request->is('post')){
             # パラメーター変数格納
@@ -84,11 +83,33 @@ class AdminController extends AppController{
         }
     }
 
+    public function kaikake_store_delete(){
+        if($this->request->is('get')){
+            #リファラチェック
+            if($this->referer()=='/'){
+                throw new NotFoundException('このページは見つかりませんでした');
+            }
+            if(isset($this->params['url']['id'])){
+                $store_id = $this->params['url']['id'];
+                # 店舗紐付けデータ削除
+                #$this->IntermediateOne->deleteAll(array('store_id' => $store_id));
+                # Status変更
+                $data = array('KaikakeStore' => array(
+                    'id' => $store_id,
+                    'status' => 'delete',
+                ));
+                if($this->KaikakeStore->save($data)){
+                    $this->Session->setFlash("買掛先の削除に成功しました");
+                }
+                else{
+                    $this->Session->setFlash("買掛先の削除に失敗しました");
+                }
+                $this->redirect($this->referer());
+            }
+        }
+    }
+
     public function intermediate_one(){
-        # 使用モデル
-        $this->loadModel("StocktakingType");
-        $this->loadModel("KaikakeStore");
-        $this->loadModel("IntermediateOne");
         # Post
         if($this->request->is('post')){
             if($this->request->data['tab']!=null){
