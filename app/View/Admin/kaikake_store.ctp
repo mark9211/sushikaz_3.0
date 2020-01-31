@@ -10,8 +10,6 @@
                         <div class="caption">
                             <i class="fa fa-plus"></i>買掛先追加
                         </div>
-                        <div class="tools">
-                        </div>
                     </div>
                     <div class="portlet-body flip-scroll">
                         <div class="row">
@@ -68,8 +66,7 @@
                         <div class="caption">
                             <i class="fa fa-list"></i>買掛先一覧
                         </div>
-                        <button type="submit" class="btn yellow">更新する</button>
-                        <div class="tools"></div>
+                        <button type="submit" class="btn yellow" style="margin-left: 20px;">更新する</button>
                     </div>
                     <div class="portlet-body flip-scroll">
                         <?if(isset($kaikake_stores)):?>
