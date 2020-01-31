@@ -18,17 +18,6 @@
                         <form class="form-bordered" role="form" method="post" action="">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label class="control-label">種類</label>
-                                    <div class="form-group">
-                                        <select class="form-control" name="type_id">
-                                            <option value="">選択してください</option>
-                                            <? foreach ($stocktaking_types as $stocktaking_type): ?>
-                                                <option value="<?= $stocktaking_type['StocktakingType']['id']; ?>"><?= $stocktaking_type['StocktakingType']['name']; ?></option>
-                                            <? endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
                                     <label class="control-label">表示順</label>
                                     <div class="form-group">
                                         <div class="input-group">
@@ -39,6 +28,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">種類</label>
+                                    <div class="form-group">
+                                        <select class="form-control" name="type_id">
+                                            <option value="">選択してください</option>
+                                            <? foreach ($stocktaking_types as $stocktaking_type): ?>
+                                                <option value="<?= $stocktaking_type['StocktakingType']['id']; ?>"><?= $stocktaking_type['StocktakingType']['name']; ?></option>
+                                            <? endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <label class="control-label">買掛先名</label>
                                     <div class="form-group">
@@ -46,7 +46,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-home"></i>
                                             </span>
-                                            <input type="text" class="form-control" placeholder="Enter Name" name="name" value="">
+                                            <input type="text" class="form-control" placeholder="〇〇商店" name="name" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +72,49 @@
                         </div>
                     </div>
                     <div class="portlet-body flip-scroll">
-
+                        <?foreach($kaikake_stores as $kaikake_store):?>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="control-label">表示順</label>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-list-ol"></i>
+                                            </span>
+                                            <input type="number" class="form-control" placeholder="100" name="rank" value="<?=$kaikake_store['KaikakeStore']['rank'];?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">種類</label>
+                                    <div class="form-group">
+                                        <select class="form-control" name="type_id">
+                                            <option value="">選択してください</option>
+                                            <?foreach ($stocktaking_types as $stocktaking_type):?>
+                                                <option value="<?= $stocktaking_type['StocktakingType']['id']; ?>" <?if($kaikake_store['KaikakeStore']['type_id']==$stocktaking_type['StocktakingType']['id']){echo "selected";}?>><?= $stocktaking_type['StocktakingType']['name']; ?></option>
+                                            <?endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">買掛先名</label>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                            <input type="text" class="form-control" placeholder="〇〇商店" name="name" value="<?=$kaikake_store['KaikakeStore']['name'];?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">削除</label>
+                                    <div class="form-group">
+                                        <input type="button" value="削除する" class="btn red" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_delete', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
+                                    </div>
+                                </div>
+                            </div>
+                        <?endforeach;?>
                     </div>
                 </div>
             </div>

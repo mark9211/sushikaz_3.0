@@ -47,6 +47,12 @@ class AdminController extends AppController{
             # 買掛先種別
             $stocktaking_types = $this->StocktakingType->find('all');
             $this->set("stocktaking_types", $stocktaking_types);
+            # 買掛先
+            $kaikake_stores = $this->KaikakeStore->find('all', array(
+                'conditions' => array('KaikakeStore.status' => 'active'),
+                'order' => ['KaikakeStore.rank' => 'asc'],
+            ));
+            $this->set("kaikake_stores", $kaikake_stores);
         }
     }
 
