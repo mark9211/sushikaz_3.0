@@ -20,7 +20,7 @@
                                 <div class="col-md-3">
                                     <label class="control-label">種類</label>
                                     <div class="form-group">
-                                        <select class="form-control" name="">
+                                        <select class="form-control" name="type_id">
                                             <option value="">選択してください</option>
                                             <? foreach ($stocktaking_types as $stocktaking_type): ?>
                                                 <option value="<?= $stocktaking_type['StocktakingType']['id']; ?>"><?= $stocktaking_type['StocktakingType']['name']; ?></option>
@@ -35,7 +35,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-list-ol"></i>
                                             </span>
-                                            <input type="number" class="form-control" placeholder="100" name="" value="">
+                                            <input type="number" class="form-control" placeholder="100" name="rank" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-home"></i>
                                             </span>
-                                            <input type="text" class="form-control" placeholder="Enter Name" name="" value="">
+                                            <input type="text" class="form-control" placeholder="Enter Name" name="name" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +61,20 @@
                     </div>
                 </div>
                 <!-- 表示・削除 -->
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>買掛先一覧
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse" data-original-title="" title="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
 
+                    </div>
+                </div>
             </div>
         </div>
     </div>

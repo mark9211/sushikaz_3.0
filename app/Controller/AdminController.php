@@ -40,7 +40,8 @@ class AdminController extends AppController{
         $this->loadModel("IntermediateOne");
         # POST
         if($this->request->is('post')){
-
+            debug($this->request->data);
+            exit;
         }
         else{
             # 買掛先種別
