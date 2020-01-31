@@ -78,13 +78,13 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-list-ol"></i>
                                             </span>
-                                            <input type="number" class="form-control" placeholder="100" name="[<?=$kaikake_store['KaikakeStore']['id'];?>][rank]" value="<?=$kaikake_store['KaikakeStore']['rank'];?>">
+                                            <input type="number" class="form-control" placeholder="100" name="<?=$kaikake_store['KaikakeStore']['id'];?>[rank]" value="<?=$kaikake_store['KaikakeStore']['rank'];?>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <select class="form-control" name="[<?=$kaikake_store['KaikakeStore']['id'];?>][type_id]">
+                                        <select class="form-control" name="<?=$kaikake_store['KaikakeStore']['id'];?>[type_id]">
                                             <option value="">選択してください</option>
                                             <?if(isset($stocktaking_types)):?>
                                                 <?foreach ($stocktaking_types as $stocktaking_type):?>
@@ -100,7 +100,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-home"></i>
                                             </span>
-                                            <input type="text" class="form-control" placeholder="〇〇商店" name="[<?=$kaikake_store['KaikakeStore']['id'];?>][name]" value="<?=$kaikake_store['KaikakeStore']['name'];?>">
+                                            <input type="text" class="form-control" placeholder="〇〇商店" name="<?=$kaikake_store['KaikakeStore']['id'];?>[name]" value="<?=$kaikake_store['KaikakeStore']['name'];?>">
                                         </div>
                                     </div>
                                 </div>
