@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="portlet-body flip-scroll">
-                        <form class="form-bordered" role="form" method="post" action="">
+                        <?= $this->Form->create('KaikakeStore', array('action'=>'kaikake_add'));?>
                             <div class="row">
                                 <div class="col-md-2">
                                     <label class="control-label">表示順</label>
@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        <?= $this->Form->end();?>
                     </div>
                 </div>
                 <!-- 表示・削除 -->

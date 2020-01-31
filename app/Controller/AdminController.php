@@ -37,24 +37,40 @@ class AdminController extends AppController{
     }
 
     public function kaikake_store(){
+        # GET
+        if($this->request->is('get')){
+            # 買掛先種別
+            $stocktaking_types = $this->StocktakingType->find('all');
+            $this->set("stocktaking_types", $stocktaking_types);
+            # 買掛先
+            $kaikake_stores = $this->KaikakeStore->find('all', array(
+                'conditions' => array('KaikakeStore.status' => 'active'),
+                'order' => ['KaikakeStore.rank' => 'asc'],
+            ));
+            $this->set("kaikake_stores", $kaikake_stores);
+        }
+    }
+
+    public function kaikake_add(){
         # POST
         if($this->request->is('post')){
             # パラメーター変数格納
+            debug($this->request->data);exit;
             $rank = $this->request->data['rank'];
             $type_id = $this->request->data['type_id'];
             $name = $this->request->data['name'];
             # Validation
             if(empty($rank)||!is_numeric($rank)){
                 $this->Session->setFlash("追加エラー：表示順を正しく設定してください");
-                $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
+                $this->redirect($this->referer());
             }
             if(empty($type_id)||!is_numeric($type_id)){
                 $this->Session->setFlash("追加エラー：種類を正しく設定してください");
-                $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
+                $this->redirect($this->referer());
             }
             if(empty($name)){
                 $this->Session->setFlash("追加エラー：買掛先名を正しく設定してください");
-                $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
+                $this->redirect($this->referer());
             }
             # INSERT
             $data = array('KaikakeStore' => array(
@@ -68,18 +84,7 @@ class AdminController extends AppController{
             else{
                 $this->Session->setFlash("新しい買掛先の追加に失敗しました");
             }
-            $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
-        }
-        else{
-            # 買掛先種別
-            $stocktaking_types = $this->StocktakingType->find('all');
-            $this->set("stocktaking_types", $stocktaking_types);
-            # 買掛先
-            $kaikake_stores = $this->KaikakeStore->find('all', array(
-                'conditions' => array('KaikakeStore.status' => 'active'),
-                'order' => ['KaikakeStore.rank' => 'asc'],
-            ));
-            $this->set("kaikake_stores", $kaikake_stores);
+            $this->redirect($this->referer());
         }
     }
 
