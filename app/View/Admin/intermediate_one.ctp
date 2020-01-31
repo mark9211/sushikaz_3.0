@@ -84,7 +84,7 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                                 <?foreach($tab_1['Store'] as $store):?>
                                                                     <div class="form-group">
                                                                         <label class="col-md-3 control-label">
-                                                                            <strong><?echo $store['KaikakeStore']['name'];?></strong>
+                                                                            <strong><?= $store['KaikakeStore']['name'];?></strong>
                                                                         </label>
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
@@ -115,14 +115,17 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_2['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label"><strong><?echo $store['KaikakeStore']['name'];?></strong></label>
+                                                                        <label class="col-md-3 control-label">
+                                                                            <strong><?= $store['KaikakeStore']['name'];?></strong>
+                                                                        </label>
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
                                                                                         <?$flag=0;foreach($store['Association'] as $a){if($a==$association['Association']['id']){$flag=1;}}?>
                                                                                         <label>
-                                                                                            <input type="checkbox" name="tab[<?echo $store['KaikakeStore']['id']?>][]" value="<?echo $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-green" <?if($flag==1){echo "checked";}?>> <?echo $association['Location']['name'];?>（<?echo $association['Attribute']['name'];?>）
+                                                                                            <input type="hidden" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="">
+                                                                                            <input type="checkbox" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="<?= $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-green" <?if($flag==1){echo "checked";}?>> <?= $association['Location']['name'];?>（<?= $association['Attribute']['name'];?>）
                                                                                         </label>
                                                                                     <?endforeach;?>
                                                                                 </div>
@@ -144,14 +147,17 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_3['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label"><strong><?echo $store['KaikakeStore']['name'];?></strong></label>
+                                                                        <label class="col-md-3 control-label">
+                                                                            <strong><?= $store['KaikakeStore']['name'];?></strong>
+                                                                        </label>
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
                                                                                         <?$flag=0;foreach($store['Association'] as $a){if($a==$association['Association']['id']){$flag=1;}}?>
                                                                                         <label>
-                                                                                            <input type="checkbox" name="tab[<?echo $store['KaikakeStore']['id']?>][]" value="<?echo $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-red" <?if($flag==1){echo "checked";}?>> <?echo $association['Location']['name'];?>（<?echo $association['Attribute']['name'];?>）
+                                                                                            <input type="hidden" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="">
+                                                                                            <input type="checkbox" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="<?= $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-green" <?if($flag==1){echo "checked";}?>> <?= $association['Location']['name'];?>（<?= $association['Attribute']['name'];?>）
                                                                                         </label>
                                                                                     <?endforeach;?>
                                                                                 </div>
@@ -173,14 +179,17 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_4['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label"><strong><?echo $store['KaikakeStore']['name'];?></strong></label>
+                                                                        <label class="col-md-3 control-label">
+                                                                            <strong><?= $store['KaikakeStore']['name'];?></strong>
+                                                                        </label>
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
                                                                                         <?$flag=0;foreach($store['Association'] as $a){if($a==$association['Association']['id']){$flag=1;}}?>
                                                                                         <label>
-                                                                                            <input type="checkbox" name="tab[<?echo $store['KaikakeStore']['id']?>][]" value="<?echo $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-grey" <?if($flag==1){echo "checked";}?>> <?echo $association['Location']['name'];?>（<?echo $association['Attribute']['name'];?>）
+                                                                                            <input type="hidden" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="">
+                                                                                            <input type="checkbox" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="<?= $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-green" <?if($flag==1){echo "checked";}?>> <?= $association['Location']['name'];?>（<?= $association['Attribute']['name'];?>）
                                                                                         </label>
                                                                                     <?endforeach;?>
                                                                                 </div>
@@ -202,14 +211,17 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_5['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label"><strong><?echo $store['KaikakeStore']['name'];?></strong></label>
+                                                                        <label class="col-md-3 control-label">
+                                                                            <strong><?= $store['KaikakeStore']['name'];?></strong>
+                                                                        </label>
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
                                                                                         <?$flag=0;foreach($store['Association'] as $a){if($a==$association['Association']['id']){$flag=1;}}?>
                                                                                         <label>
-                                                                                            <input type="checkbox" name="tab[<?echo $store['KaikakeStore']['id']?>][]" value="<?echo $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-yellow" <?if($flag==1){echo "checked";}?>> <?echo $association['Location']['name'];?>（<?echo $association['Attribute']['name'];?>）
+                                                                                            <input type="hidden" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="">
+                                                                                            <input type="checkbox" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="<?= $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-green" <?if($flag==1){echo "checked";}?>> <?= $association['Location']['name'];?>（<?= $association['Attribute']['name'];?>）
                                                                                         </label>
                                                                                     <?endforeach;?>
                                                                                 </div>
@@ -231,14 +243,17 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_6['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label"><strong><?echo $store['KaikakeStore']['name'];?></strong></label>
+                                                                        <label class="col-md-3 control-label">
+                                                                            <strong><?= $store['KaikakeStore']['name'];?></strong>
+                                                                        </label>
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
                                                                                         <?$flag=0;foreach($store['Association'] as $a){if($a==$association['Association']['id']){$flag=1;}}?>
                                                                                         <label>
-                                                                                            <input type="checkbox" name="tab[<?echo $store['KaikakeStore']['id']?>][]" value="<?echo $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-orange" <?if($flag==1){echo "checked";}?>> <?echo $association['Location']['name'];?>（<?echo $association['Attribute']['name'];?>）
+                                                                                            <input type="hidden" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="">
+                                                                                            <input type="checkbox" name="tab[<?= $store['KaikakeStore']['id']?>][<?= $association['Association']['id']?>]" value="<?= $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-green" <?if($flag==1){echo "checked";}?>> <?= $association['Location']['name'];?>（<?= $association['Attribute']['name'];?>）
                                                                                         </label>
                                                                                     <?endforeach;?>
                                                                                 </div>
