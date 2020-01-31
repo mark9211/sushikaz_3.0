@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <?= $this->Form->end();?>
-                <!-- 新規追加 終了 -->
+                <!-- 新規追加 END -->
                 <!-- 表示・削除 -->
                 <?= $this->Form->create(false, array('controller'=>'admin','action'=>'kaikake_store_edit'));?>
                 <div class="portlet light">
@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <?= $this->Form->end();?>
-                <!-- 表示・削除 終了 -->
+                <!-- 表示・削除 END -->
             </div>
         </div>
     </div>
