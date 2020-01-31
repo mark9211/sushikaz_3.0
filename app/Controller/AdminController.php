@@ -43,18 +43,19 @@ class AdminController extends AppController{
         if($this->request->is('post')){
             if($this->request->data['tab']!=null){
                 foreach($this->request->data['tab'] as $key => $a){
-                    debug($a);exit;
                     # 一度リセット
                     $this->IntermediateOne->deleteAll(array('store_id' => $key));
                     # Insert
                     foreach($a as $b){
-                        $data = array('IntermediateOne' => array(
-                            'association_id' => $b,
-                            'store_id' => $key,
-                        ));
-                        #ループ実行文
-                        $this->IntermediateOne->create(false);
-                        $this->IntermediateOne->save($data);
+                        if($b!=null){
+                            $data = array('IntermediateOne' => array(
+                                'association_id' => $b,
+                                'store_id' => $key,
+                            ));
+                            #ループ実行文
+                            $this->IntermediateOne->create(false);
+                            $this->IntermediateOne->save($data);
+                        }
                     }
                 }
                 $this->Session->setFlash('データを保存しました','flash_success');
