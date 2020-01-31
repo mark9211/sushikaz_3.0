@@ -87,6 +87,15 @@ class AdminController extends AppController{
         }
     }
 
+    public function kaikake_store_edit(){
+        # POST
+        if($this->request->is('post')){
+            debug($this->request->data);exit;
+            # パラメーター変数格納
+
+        }
+    }
+
     public function kaikake_store_delete(){
         if($this->request->is('get')){
             #リファラチェック

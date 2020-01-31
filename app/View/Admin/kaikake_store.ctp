@@ -75,7 +75,8 @@
                     </div>
                     <div class="portlet-body flip-scroll">
                         <?if(isset($kaikake_stores)):?>
-                        <?foreach($kaikake_stores as $kaikake_store):?>
+                            <?= $this->Form->create(false, array('controller'=>'admin','action'=>'kaikake_store_edit'));?>
+                            <?foreach($kaikake_stores as $kaikake_store):?>
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -83,13 +84,13 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-list-ol"></i>
                                             </span>
-                                            <input type="number" class="form-control" placeholder="100" name="rank" value="<?=$kaikake_store['KaikakeStore']['rank'];?>">
+                                            <input type="number" class="form-control" placeholder="100" name="store[<?=$kaikake_store['KaikakeStore']['id'];?>][rank]" value="<?=$kaikake_store['KaikakeStore']['rank'];?>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <select class="form-control" name="type_id">
+                                        <select class="form-control" name="store[<?=$kaikake_store['KaikakeStore']['id'];?>][type_id]">
                                             <option value="">選択してください</option>
                                             <?if(isset($stocktaking_types)):?>
                                             <?foreach ($stocktaking_types as $stocktaking_type):?>
@@ -105,7 +106,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-home"></i>
                                             </span>
-                                            <input type="text" class="form-control" placeholder="〇〇商店" name="name" value="<?=$kaikake_store['KaikakeStore']['name'];?>">
+                                            <input type="text" class="form-control" placeholder="〇〇商店" name="store[<?=$kaikake_store['KaikakeStore']['id'];?>][name]" value="<?=$kaikake_store['KaikakeStore']['name'];?>">
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +116,8 @@
                                     </div>
                                 </div>
                             </div>
-                        <?endforeach;?>
+                            <?endforeach;?>
+                            <?= $this->Form->end();?>
                         <?endif;?>
                     </div>
                 </div>
