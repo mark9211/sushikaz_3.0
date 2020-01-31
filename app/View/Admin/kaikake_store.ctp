@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="portlet-body flip-scroll">
-                        <?= $this->Form->create(false, array('controller'=>'admin','action'=>'kaikake_add'));?>
+                        <?= $this->Form->create(false, array('controller'=>'admin','action'=>'kaikake_store_add'));?>
                             <div class="row">
                                 <div class="col-md-2">
                                     <label class="control-label">表示順</label>

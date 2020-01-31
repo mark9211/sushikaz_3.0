@@ -51,11 +51,10 @@ class AdminController extends AppController{
         }
     }
 
-    public function kaikake_add(){
+    public function kaikake_store_add(){
         # POST
         if($this->request->is('post')){
             # パラメーター変数格納
-            debug($this->request->data);exit;
             $rank = $this->request->data['rank'];
             $type_id = $this->request->data['type_id'];
             $name = $this->request->data['name'];
