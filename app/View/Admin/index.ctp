@@ -16,7 +16,7 @@
                     <div class="portlet-body flip-scroll">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <?= $this->Html->link('買掛支払先（登録・削除）', array('controller'=>'admin', 'action'=>'kaikake_store'));?>
+                                <?= $this->Html->link('買掛支払先（マスタ）', array('controller'=>'admin', 'action'=>'kaikake_store'));?>
                             </li>
                             <li class="list-group-item">
                                 <?= $this->Html->link('買掛支払先（店舗紐付）', array('controller'=>'admin', 'action'=>'intermediate_one'));?>
