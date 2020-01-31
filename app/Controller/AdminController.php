@@ -111,15 +111,16 @@ class AdminController extends AppController{
     }
 
     public function kaikake_store_delete(){
+        # GET
         if($this->request->is('get')){
-            #リファラチェック
+            # リファラチェック
             if($this->referer()=='/'){
                 throw new NotFoundException('このページは見つかりませんでした');
             }
             if(isset($this->params['url']['id'])){
                 $store_id = $this->params['url']['id'];
                 # 店舗紐付けデータ削除
-                #$this->IntermediateOne->deleteAll(array('store_id' => $store_id));
+                $this->IntermediateOne->deleteAll(array('store_id' => $store_id));
                 # Status変更
                 $data = array('KaikakeStore' => array(
                     'id' => $store_id,
