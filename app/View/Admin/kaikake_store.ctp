@@ -15,7 +15,7 @@
                     </div>
                     <div class="portlet-body flip-scroll">
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label class="control-label">種類</label>
                                 <div class="form-group">
                                     <select class="form-control" name="">
@@ -26,14 +26,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label class="control-label">表示順</label>
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-list-ol"></i>
                                         </span>
-                                        <input type="number" class="form-control" placeholder="例）5000" name="" value="">
+                                        <input type="number" class="form-control" placeholder="100" name="" value="">
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-3">
                                 <label class="control-label">登録</label>
                                 <div class="form-group">
                                     <button type="submit" class="btn green">登録する</button>
