@@ -16,10 +16,13 @@
                     <div class="portlet-body flip-scroll">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <?echo $this->Html->link('買掛支払先（店舗別）', array('controller'=>'admin', 'action'=>'intermediate_one'));?>
+                                <?= $this->Html->link('買掛支払先（登録・削除）', array('controller'=>'admin', 'action'=>'kaikake_store'));?>
                             </li>
                             <li class="list-group-item">
-                                <?echo $this->Html->link('定額支出先（店舗別）', array('controller'=>'admin', 'action'=>'intermediate_three'));?>
+                                <?= $this->Html->link('買掛支払先（店舗紐付）', array('controller'=>'admin', 'action'=>'intermediate_one'));?>
+                            </li>
+                            <li class="list-group-item">
+                                <?= $this->Html->link('定額支出先（数値入力）', array('controller'=>'admin', 'action'=>'intermediate_three'));?>
                             </li>
                         </ul>
                     </div>
