@@ -58,6 +58,14 @@ class AdminController extends AppController{
                 $this->Session->setFlash("追加エラー：買掛先名を正しく設定してください");
                 $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
             }
+            # INSERT
+            $data = array('KaikakeStore' => array(
+                'rank' => $rank,
+                'type_id' => $type_id,
+                'name' => $name,
+            ));
+            debug($data);
+            exit;
         }
         else{
             # 買掛先種別
