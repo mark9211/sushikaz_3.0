@@ -75,7 +75,6 @@
                         <?foreach($kaikake_stores as $kaikake_store):?>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label class="control-label">表示順</label>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -86,7 +85,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="control-label">種類</label>
                                     <div class="form-group">
                                         <select class="form-control" name="type_id">
                                             <option value="">選択してください</option>
@@ -97,7 +95,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="control-label">買掛先名</label>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -108,7 +105,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label">削除</label>
                                     <div class="form-group">
                                         <input type="button" value="削除する" class="btn red" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_delete', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
                                     </div>
