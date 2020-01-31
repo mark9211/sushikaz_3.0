@@ -11,8 +11,6 @@
                             <i class="fa fa-plus"></i>買掛先追加
                         </div>
                         <div class="tools">
-                            <a href="javascript:;" class="collapse" data-original-title="" title="">
-                            </a>
                         </div>
                     </div>
                     <div class="portlet-body flip-scroll">
@@ -71,10 +69,7 @@
                             <i class="fa fa-list"></i>買掛先一覧
                         </div>
                         <button type="submit" class="btn yellow">更新する</button>
-                        <div class="tools">
-                            <a href="javascript:;" class="collapse" data-original-title="" title="">
-                            </a>
-                        </div>
+                        <div class="tools"></div>
                     </div>
                     <div class="portlet-body flip-scroll">
                         <?if(isset($kaikake_stores)):?>
