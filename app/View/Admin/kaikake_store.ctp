@@ -33,9 +33,11 @@
                                     <div class="form-group">
                                         <select class="form-control" name="type_id">
                                             <option value="">選択してください</option>
-                                            <? foreach ($stocktaking_types as $stocktaking_type): ?>
+                                            <?if(isset($stocktaking_types)):?>
+                                            <?foreach ($stocktaking_types as $stocktaking_type):?>
                                                 <option value="<?= $stocktaking_type['StocktakingType']['id']; ?>"><?= $stocktaking_type['StocktakingType']['name']; ?></option>
-                                            <? endforeach; ?>
+                                            <?endforeach;?>
+                                            <?endif;?>
                                         </select>
                                     </div>
                                 </div>
@@ -72,6 +74,7 @@
                         </div>
                     </div>
                     <div class="portlet-body flip-scroll">
+                        <?if(isset($kaikake_stores)):?>
                         <?foreach($kaikake_stores as $kaikake_store):?>
                             <div class="row">
                                 <div class="col-md-2">
@@ -88,9 +91,11 @@
                                     <div class="form-group">
                                         <select class="form-control" name="type_id">
                                             <option value="">選択してください</option>
+                                            <?if(isset($stocktaking_types)):?>
                                             <?foreach ($stocktaking_types as $stocktaking_type):?>
                                                 <option value="<?= $stocktaking_type['StocktakingType']['id']; ?>" <?if($kaikake_store['KaikakeStore']['type_id']==$stocktaking_type['StocktakingType']['id']){echo "selected";}?>><?= $stocktaking_type['StocktakingType']['name']; ?></option>
                                             <?endforeach; ?>
+                                            <?endif;?>
                                         </select>
                                     </div>
                                 </div>
@@ -106,11 +111,12 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <input type="button" value="削除する" class="btn red" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_delete', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
+                                        <input type="button" value="削除する" class="btn red" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?= $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_delete', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
                                     </div>
                                 </div>
                             </div>
                         <?endforeach;?>
+                        <?endif;?>
                     </div>
                 </div>
             </div>
