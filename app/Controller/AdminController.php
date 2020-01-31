@@ -42,11 +42,10 @@ class AdminController extends AppController{
         # Post
         if($this->request->is('post')){
             if($this->request->data['tab']!=null){
-                debug($this->request->data['tab']);
-                exit;
-                # 一度リセット
-                $this->IntermediateOne->deleteAll();
                 foreach($this->request->data['tab'] as $key => $a){
+                    debug($a);exit;
+                    # 一度リセット
+                    $this->IntermediateOne->deleteAll(array('store_id' => $key));
                     # Insert
                     foreach($a as $b){
                         $data = array('IntermediateOne' => array(
