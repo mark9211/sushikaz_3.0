@@ -90,9 +90,23 @@ class AdminController extends AppController{
     public function kaikake_store_edit(){
         # POST
         if($this->request->is('post')){
-            debug($this->request->data);exit;
             # パラメーター変数格納
-
+            $stores = $this->request->data;
+            if($stores!=null){
+                foreach($stores as $store_id => $store){
+                    $data = array('KaikakeStore' => array(
+                        'id' => $store_id,
+                        'rank' => $store['rank'],
+                        'type_id' => $store['type_id'],
+                        'name' => $store['name'],
+                    ));
+                    # ループ実行文
+                    $this->KaikakeStore->create(false);
+                    $this->KaikakeStore->save($data);
+                }
+            }
+            $this->Session->setFlash("買掛先の更新に成功しました");
+            $this->redirect($this->referer());
         }
     }
 
