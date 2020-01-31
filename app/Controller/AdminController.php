@@ -45,15 +45,18 @@ class AdminController extends AppController{
             $rank = $this->request->data['rank'];
             $type_id = $this->request->data['type_id'];
             $name = $this->request->data['name'];
-            # 入力値検証
-            if(!is_numeric($rank)){
+            # Validation
+            if(is_null($rank)||!is_numeric($rank)){
                 $this->Session->setFlash("追加エラー：表示順を正しく設定してください");
+                $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
             }
-            if(!is_numeric($type_id)){
+            if(is_null($type_id)||!is_numeric($type_id)){
                 $this->Session->setFlash("追加エラー：種類を正しく設定してください");
+                $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
             }
             if(is_null($name)){
                 $this->Session->setFlash("追加エラー：買掛先名を正しく設定してください");
+                $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
             }
         }
         else{
