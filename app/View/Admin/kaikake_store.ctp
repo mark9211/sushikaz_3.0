@@ -105,9 +105,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-1">
-                                    <label class="control-label">更新</label>
                                     <div class="form-group">
-                                        <input type="button" value="削除する" class="btn blue" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_delete', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
+                                        <input type="button" value="更新する" class="btn yellow" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_edit', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
