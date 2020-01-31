@@ -38,7 +38,15 @@ class AdminController extends AppController{
         $this->loadModel("StocktakingType");
         $this->loadModel("KaikakeStore");
         $this->loadModel("IntermediateOne");
+        # POST
+        if($this->request->is('post')){
 
+        }
+        else{
+            # 買掛先種別
+            $stocktaking_types = $this->StocktakingType->find('all');
+            $this->set("stocktaking_types", $stocktaking_types);
+        }
     }
 
     public function intermediate_one(){
