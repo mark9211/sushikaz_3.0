@@ -92,7 +92,7 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                                                     <?foreach($associations as $association):?>
                                                                                         <?$flag=0;foreach($store['Association'] as $a){if($a==$association['Association']['id']){$flag=1;}}?>
                                                                                         <label>
-                                                                                            <input type="hidden" name="tab[<?= $store['KaikakeStore']['id']?>][]" value="[]">
+                                                                                            <input type="hidden" name="tab[<?= $store['KaikakeStore']['id']?>]" value="">
                                                                                             <input type="checkbox" name="tab[<?= $store['KaikakeStore']['id']?>][]" value="<?= $association['Association']['id']?>" class="icheck" data-checkbox="icheckbox_square-blue" <?if($flag==1){echo "checked";}?>> <?= $association['Location']['name'];?>（<?= $association['Attribute']['name'];?>）
                                                                                         </label>
                                                                                     <?endforeach;?>
