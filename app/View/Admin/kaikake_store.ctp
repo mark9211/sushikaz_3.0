@@ -17,7 +17,7 @@
                     <div class="portlet-body flip-scroll">
                         <form class="form-bordered" role="form" method="post" action="">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="control-label">表示順</label>
                                     <div class="form-group">
                                         <div class="input-group">
@@ -28,7 +28,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="control-label">種類</label>
                                     <div class="form-group">
                                         <select class="form-control" name="type_id">
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <label class="control-label">登録</label>
                                     <div class="form-group">
                                         <button type="submit" class="btn green">登録する</button>
@@ -74,7 +74,7 @@
                     <div class="portlet-body flip-scroll">
                         <?foreach($kaikake_stores as $kaikake_store):?>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -84,7 +84,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <select class="form-control" name="type_id">
                                             <option value="">選択してください</option>
@@ -104,12 +104,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <input type="button" value="更新する" class="btn yellow" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_edit', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
                                     </div>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <input type="button" value="削除する" class="btn red" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_delete', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
                                     </div>
