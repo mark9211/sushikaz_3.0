@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     <label class="control-label">登録</label>
                                     <div class="form-group">
                                         <button type="submit" class="btn green">登録する</button>
@@ -104,7 +104,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
+                                    <label class="control-label">更新</label>
+                                    <div class="form-group">
+                                        <input type="button" value="削除する" class="btn blue" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_delete', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
                                     <div class="form-group">
                                         <input type="button" value="削除する" class="btn red" onclick='var ok=confirm("本当に削除してもよろしいですか？");if (ok) location.href="<?echo $this->Html->url(array('controller'=>'admin', 'action'=>'kaikake_store_delete', '?' => array('id' => $kaikake_store['KaikakeStore']['id'])));?>"'>
                                     </div>
