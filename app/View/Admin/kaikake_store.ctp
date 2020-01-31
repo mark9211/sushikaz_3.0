@@ -7,7 +7,7 @@
                 <div class="portlet light">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-cogs"></i>買掛先追加
+                            <i class="fa fa-plus"></i>買掛先追加
                         </div>
                         <div class="tools">
                             <a href="javascript:;" class="collapse" data-original-title="" title="">
@@ -64,7 +64,7 @@
                 <div class="portlet light">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-cogs"></i>買掛先一覧
+                            <i class="fa fa-list"></i>買掛先一覧
                         </div>
                         <div class="tools">
                             <a href="javascript:;" class="collapse" data-original-title="" title="">
