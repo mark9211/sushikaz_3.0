@@ -40,7 +40,6 @@ class AdminController extends AppController{
         $this->loadModel("IntermediateOne");
         # POST
         if($this->request->is('post')){
-            debug($this->request->data);
             # パラメーター変数格納
             $rank = $this->request->data['rank'];
             $type_id = $this->request->data['type_id'];
@@ -64,8 +63,13 @@ class AdminController extends AppController{
                 'type_id' => $type_id,
                 'name' => $name,
             ));
-            debug($data);
-            exit;
+            if($this->KaikakeStore->save($data)){
+                $this->Session->setFlash("新しい買掛先の追加に成功しました");
+            }
+            else{
+                $this->Session->setFlash("新しい買掛先の追加に失敗しました");
+            }
+            $this->redirect(array('controller'=>'admin', 'action'=>'kaikake_store'));
         }
         else{
             # 買掛先種別
