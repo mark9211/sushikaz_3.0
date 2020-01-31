@@ -96,7 +96,7 @@ class AdminController extends AppController{
                 # Status変更
                 $data = array('KaikakeStore' => array(
                     'id' => $store_id,
-                    'status' => 'delete',
+                    'status' => 'deleted',
                 ));
                 if($this->KaikakeStore->save($data)){
                     $this->Session->setFlash("買掛先の削除に成功しました");
