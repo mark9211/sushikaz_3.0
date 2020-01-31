@@ -16,7 +16,7 @@
                     </div>
                     <div class="portlet-body flip-scroll">
                         <form class="form-horizontal form-bordered" role="form" method="post" action="">
-
+                            <div class="row">
                                 <div class="col-md-3">
                                     <label class="control-label">種類</label>
                                     <div class="form-group">
@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label class="control-label">買掛先名</label>
                                     <div class="form-group">
                                         <div class="input-group">
@@ -50,13 +50,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label class="control-label">登録</label>
                                     <div class="form-group">
                                         <button type="submit" class="btn green">登録する</button>
                                     </div>
                                 </div>
-                            
+                            </div>
                         </form>
                     </div>
                 </div>
