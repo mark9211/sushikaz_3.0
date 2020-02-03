@@ -425,12 +425,12 @@ class MemberProfilesController extends AppController{
                 $c_result = $this->CustomerCount->diviseSushiYakiniku($customer_counts);
 
                 if($result['寿司']!=null){
-                    $location['sales'] = floor($result['寿司']*1.08);$location['target'] = floor($target_sum/2);$location['customer'] = $c_result['寿司'];
+                    $location['sales'] = floor($result['寿司']*1.1);$location['target'] = floor($target_sum/2);$location['customer'] = $c_result['寿司'];
                     $this->set('location3', $location);
                 }
                 $location = array();
                 if($result['焼肉']!=null){
-                    $location['sales'] = floor($result['焼肉']*1.08);$location['target'] = floor($target_sum/2);$location['customer'] = $c_result['焼肉'];
+                    $location['sales'] = floor($result['焼肉']*1.1);$location['target'] = floor($target_sum/2);$location['customer'] = $c_result['焼肉'];
                     $this->set('location4', $location);
                 }
             }
@@ -1232,11 +1232,11 @@ class MemberProfilesController extends AppController{
                     ->setCellValue('C'.$num, $arr[1]);
                 if(in_array($num, $num_arr)){
                     $obj->setActiveSheetIndex(0)
-                        ->setCellValue('E'.$num, floor($arr[2]/1.08))
-                        ->setCellValue('G'.$num, floor($arr[3]/1.08))
-                        ->setCellValue('I'.$num, floor($arr[4]/1.08))
-                        ->setCellValue('K'.$num, floor($arr[5]/1.08))
-                        ->setCellValue('O'.$num, floor($arr[6]/1.08));
+                        ->setCellValue('E'.$num, floor($arr[2]/1.1))
+                        ->setCellValue('G'.$num, floor($arr[3]/1.1))
+                        ->setCellValue('I'.$num, floor($arr[4]/1.1))
+                        ->setCellValue('K'.$num, floor($arr[5]/1.1))
+                        ->setCellValue('O'.$num, floor($arr[6]/1.1));
                 }
                 else{
                     $obj->setActiveSheetIndex(0)
@@ -1872,7 +1872,7 @@ class MemberProfilesController extends AppController{
                         $l += $sales_lunch['SalesLunch']['fee'];
                     }
                 }
-                $sales_arr[$w]['lunch']=floor($l*1.08);$sales_arr[$w]['dinner']=floor(($s-$l)*1.08);
+                $sales_arr[$w]['lunch']=floor($l*1.1);$sales_arr[$w]['dinner']=floor(($s-$l)*1.1);
             }
             foreach($members as $member) {
                 if($member['Type']['name']=="アルバイト") {
