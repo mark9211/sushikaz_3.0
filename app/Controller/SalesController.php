@@ -283,6 +283,7 @@ class SalesController extends AppController{
 							foreach($attendance_results as $attendance_result){
 								#時給
 								$hourly_wage = 0;
+								$day_hourly_wage = 0;
 								#曜日取得
 								$working_day = $attendance_result['AttendanceResult']['working_day'];
 								$day = $weekday[date('w', strtotime($working_day))];
@@ -290,17 +291,19 @@ class SalesController extends AppController{
 								$flag = 0;
 								$result = array_key_exists($working_day, $datas);
 								#勤怠管理時時給
-								if($attendance_result['AttendanceResult']['day_hourly_wage']!=0){
-									$day_hourly_wage = $attendance_result['AttendanceResult']['day_hourly_wage'];
-								}else{
-									$day_hourly_wage = $member['Member']['hourly_wage'];
-								}
-								if ($result==true || $day=='日' || $day=='土') {
-									$hourly_wage = $day_hourly_wage + 100;
-									$flag = 1;//休日フラグ
-								}else{
-									$hourly_wage = $day_hourly_wage;
-									$flag = 2;//平日フラグ
+								if($member['Type']['name']=='アルバイト'){
+									if($attendance_result['AttendanceResult']['day_hourly_wage']!=0){
+										$day_hourly_wage = $attendance_result['AttendanceResult']['day_hourly_wage'];
+									}else{
+										$day_hourly_wage = $member['Member']['hourly_wage'];
+									}
+									if ($result==true || $day=='日' || $day=='土') {
+										$hourly_wage = $day_hourly_wage + 100;
+										$flag = 1;//休日フラグ
+									}else{
+										$hourly_wage = $day_hourly_wage;
+										$flag = 2;//平日フラグ
+									}
 								}
 								/*
                                 foreach ($datas as $data) {
