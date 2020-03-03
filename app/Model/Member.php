@@ -40,7 +40,8 @@ class Member extends AppModel {
 	#従業員検索（勤務地別）
 	public function getMemberByLocationId($location_id){
 		$members = $this->find('all', array(
-			"conditions" => array("Member.location_id"=>$location_id)
+			'conditions' => array('Member.location_id'=>$location_id),
+			'order' => array('Member.type_id'=>'asc')
 		));
 		return $members;
 	}
