@@ -241,175 +241,173 @@ class SalesController extends AppController{
 					}
 					$w_arr = array( "日" => "bonus_four", "土" => "bonus_three", "金" => "bonus_two", "木" => "bonus_one", "水" => "bonus_one", "火" => "bonus_one", "月" => "bonus_one" );
 					foreach($members as $member) {
-						if($member['Type']['name'] == "アルバイト") {
-							$attendance_results = $this->AttendanceResult->find('all', array(
-								'conditions' => array('AttendanceResult.location_id' => $location['Location']['id'], 'AttendanceResult.working_day LIKE' => '%' . $month . '%', 'AttendanceResult.member_id' => $member['Member']['id'])
-							));
-							if($attendance_results!=null) {
-								#時間数
-								$hours_arr = array();
-								$hours_arr['weekday']['normal'] = 0;$hours_arr['weekday']['late'] = 0;$hours_arr['weekend']['normal'] = 0;$hours_arr['weekend']['late'] = 0;
-								#給与金額
-								$salary_arr = array();
-								$salary_arr['weekday']['normal'] = 0;$salary_arr['weekday']['late'] = 0;$salary_arr['weekend']['normal'] = 0;$salary_arr['weekend']['late'] = 0;
-								#大入り手当
-								$special_fee = 0;
-								#交通費
-								$compensation = 0;
-								#まかない
-								$makanai = 0;
-								if(count($attendance_results) < 16){    //日ごと
-									if($member['Member']['compensation_daily']!=0){
+						$attendance_results = $this->AttendanceResult->find('all', array(
+							'conditions' => array('AttendanceResult.location_id' => $location['Location']['id'], 'AttendanceResult.working_day LIKE' => '%' . $month . '%', 'AttendanceResult.member_id' => $member['Member']['id'])
+						));
+						if($attendance_results!=null) {
+							#時間数
+							$hours_arr = array();
+							$hours_arr['weekday']['normal'] = 0;$hours_arr['weekday']['late'] = 0;$hours_arr['weekend']['normal'] = 0;$hours_arr['weekend']['late'] = 0;
+							#給与金額
+							$salary_arr = array();
+							$salary_arr['weekday']['normal'] = 0;$salary_arr['weekday']['late'] = 0;$salary_arr['weekend']['normal'] = 0;$salary_arr['weekend']['late'] = 0;
+							#大入り手当
+							$special_fee = 0;
+							#交通費
+							$compensation = 0;
+							#まかない
+							$makanai = 0;
+							if(count($attendance_results) < 16){    //日ごと
+								if($member['Member']['compensation_daily']!=0){
+									$compensation = count($attendance_results)*$member['Member']['compensation_daily'];
+								}else{
+									$compensation = $member['Member']['compensation_monthly'];
+								}
+							}elseif(count($attendance_results) >= 16){   //定期
+								if($member['Member']['compensation_monthly']!=0){
+									#定期の方が高かったら,日割り
+									if($member['Member']['compensation_monthly'] > count($attendance_results)*$member['Member']['compensation_daily']&&$member['Member']['compensation_daily']!=0){
 										$compensation = count($attendance_results)*$member['Member']['compensation_daily'];
 									}else{
 										$compensation = $member['Member']['compensation_monthly'];
 									}
-								}elseif(count($attendance_results) >= 16){   //定期
-									if($member['Member']['compensation_monthly']!=0){
-										#定期の方が高かったら,日割り
-										if($member['Member']['compensation_monthly'] > count($attendance_results)*$member['Member']['compensation_daily']&&$member['Member']['compensation_daily']!=0){
-											$compensation = count($attendance_results)*$member['Member']['compensation_daily'];
-										}else{
-											$compensation = $member['Member']['compensation_monthly'];
-										}
-									}else{
-										$compensation = count($attendance_results)*$member['Member']['compensation_daily'];
-									}
+								}else{
+									$compensation = count($attendance_results)*$member['Member']['compensation_daily'];
 								}
-								#交通費補正
-								if($compensation > 10000){
-									$compensation = 10000;
+							}
+							#交通費補正
+							if($compensation > 10000){
+								$compensation = 10000;
+							}
+							#計算
+							foreach($attendance_results as $attendance_result){
+								#時給
+								$hourly_wage = 0;
+								#曜日取得
+								$working_day = $attendance_result['AttendanceResult']['working_day'];
+								$day = $weekday[date('w', strtotime($working_day))];
+								#平日or休日判定（休日なら時給1.25倍）
+								$flag = 0;
+								$result = array_key_exists($working_day, $datas);
+								#勤怠管理時時給
+								if($attendance_result['AttendanceResult']['day_hourly_wage']!=0){
+									$day_hourly_wage = $attendance_result['AttendanceResult']['day_hourly_wage'];
+								}else{
+									$day_hourly_wage = $member['Member']['hourly_wage'];
 								}
-								#計算
-								foreach($attendance_results as $attendance_result){
-									#時給
-									$hourly_wage = 0;
-									#曜日取得
-									$working_day = $attendance_result['AttendanceResult']['working_day'];
-									$day = $weekday[date('w', strtotime($working_day))];
-									#平日or休日判定（休日なら時給1.25倍）
-									$flag = 0;
-									$result = array_key_exists($working_day, $datas);
-									#勤怠管理時時給
-									if($attendance_result['AttendanceResult']['day_hourly_wage']!=0){
-										$day_hourly_wage = $attendance_result['AttendanceResult']['day_hourly_wage'];
-									}else{
-										$day_hourly_wage = $member['Member']['hourly_wage'];
-									}
-									if ($result==true || $day=='日' || $day=='土') {
-										$hourly_wage = $day_hourly_wage + 100;
-										$flag = 1;//休日フラグ
-									}else{
-										$hourly_wage = $day_hourly_wage;
-										$flag = 2;//平日フラグ
-									}
-									/*
-                                    foreach ($datas as $data) {
-                                        $data['date'] = date('Y-m-d', strtotime($data['date']));
-                                        if ($working_day==$data['date'] || $day=='日' || $day=='土') {
-                                            $hourly_wage = floor($member['Member']['hourly_wage']*1.25);
-                                            $flag = 1;//休日フラグ
-                                        }else{
-                                            $hourly_wage = $member['Member']['hourly_wage'];
-                                            $flag = 2;//平日フラグ
-                                        }
+								if ($result==true || $day=='日' || $day=='土') {
+									$hourly_wage = $day_hourly_wage + 100;
+									$flag = 1;//休日フラグ
+								}else{
+									$hourly_wage = $day_hourly_wage;
+									$flag = 2;//平日フラグ
+								}
+								/*
+                                foreach ($datas as $data) {
+                                    $data['date'] = date('Y-m-d', strtotime($data['date']));
+                                    if ($working_day==$data['date'] || $day=='日' || $day=='土') {
+                                        $hourly_wage = floor($member['Member']['hourly_wage']*1.25);
+                                        $flag = 1;//休日フラグ
+                                    }else{
+                                        $hourly_wage = $member['Member']['hourly_wage'];
+                                        $flag = 2;//平日フラグ
                                     }
-                                    */
-									#休日
-									if($flag==1){
-										#時間数
-										$hours_arr['weekend']['normal'] += $attendance_result['AttendanceResult']['hours'];
-										$hours_arr['weekend']['late'] += $attendance_result['AttendanceResult']['late_hours'];
-										#給与
-										$salary_arr['weekend']['normal'] += $hourly_wage*$attendance_result['AttendanceResult']['hours'];
-										$salary_arr['weekend']['late'] += $attendance_result['AttendanceResult']['late_hours']*floor($hourly_wage*1.25);
+                                }
+                                */
+								#休日
+								if($flag==1){
+									#時間数
+									$hours_arr['weekend']['normal'] += $attendance_result['AttendanceResult']['hours'];
+									$hours_arr['weekend']['late'] += $attendance_result['AttendanceResult']['late_hours'];
+									#給与
+									$salary_arr['weekend']['normal'] += $hourly_wage*$attendance_result['AttendanceResult']['hours'];
+									$salary_arr['weekend']['late'] += $attendance_result['AttendanceResult']['late_hours']*floor($hourly_wage*1.25);
+								}
+								#平日
+								elseif($flag==2){
+									#時間数
+									$hours_arr['weekday']['normal'] += $attendance_result['AttendanceResult']['hours'];
+									$hours_arr['weekday']['late'] += $attendance_result['AttendanceResult']['late_hours'];
+									#給与
+									$salary_arr['weekday']['normal'] += $hourly_wage*$attendance_result['AttendanceResult']['hours'];
+									$salary_arr['weekday']['late'] += $attendance_result['AttendanceResult']['late_hours']*floor($hourly_wage*1.25);
+								}
+								else{
+									echo "ERROR:Holiday";
+									exit;
+								}
+								#大入り判定
+								$timezone = $this->AttendanceResult->judgeLunchDinner($attendance_result);	//勤務時間帯
+								if($timezone=='lunch'||$timezone=='dinner'){
+									$target = $this->Target->find('first', array(
+										'conditions' => array('Target.location_id' => $location['Location']['id'], 'Target.working_month' => $month.'-01', 'Target.type' => $timezone)
+									));
+									if($target!=null){
+										# 祝日判定
+										if($result==true){
+											if($sales_arr[$working_day][$timezone]>=$target['Target']['bonus_five']){
+												$special_fee += 300;
+												$special_days[$working_day][$timezone] = $sales_arr[$working_day][$timezone];
+											}
+										}else{
+											if($sales_arr[$working_day][$timezone]>=$target['Target'][$w_arr[$day]]){
+												$special_fee += 300;
+												$special_days[$working_day][$timezone] = $sales_arr[$working_day][$timezone];
+											}
+										}
 									}
-									#平日
-									elseif($flag==2){
-										#時間数
-										$hours_arr['weekday']['normal'] += $attendance_result['AttendanceResult']['hours'];
-										$hours_arr['weekday']['late'] += $attendance_result['AttendanceResult']['late_hours'];
-										#給与
-										$salary_arr['weekday']['normal'] += $hourly_wage*$attendance_result['AttendanceResult']['hours'];
-										$salary_arr['weekday']['late'] += $attendance_result['AttendanceResult']['late_hours']*floor($hourly_wage*1.25);
-									}
-									else{
-										echo "ERROR:Holiday";
-										exit;
-									}
-									#大入り判定
-									$timezone = $this->AttendanceResult->judgeLunchDinner($attendance_result);	//勤務時間帯
-									if($timezone=='lunch'||$timezone=='dinner'){
+								}
+								elseif($timezone=='lunch/dinner'){
+									$t_arr = array(0=>"lunch", 1=>"dinner");$f=0;
+									foreach($t_arr as $type){
 										$target = $this->Target->find('first', array(
-											'conditions' => array('Target.location_id' => $location['Location']['id'], 'Target.working_month' => $month.'-01', 'Target.type' => $timezone)
+											'conditions' => array('Target.location_id' => $location['Location']['id'], 'Target.working_month' => $month.'-01', 'Target.type' => $type)
 										));
 										if($target!=null){
 											# 祝日判定
 											if($result==true){
-												if($sales_arr[$working_day][$timezone]>=$target['Target']['bonus_five']){
-													$special_fee += 300;
-													$special_days[$working_day][$timezone] = $sales_arr[$working_day][$timezone];
+												if($sales_arr[$working_day][$type]>=$target['Target']['bonus_five']){
+													if($f==0){
+														$special_fee += 300;
+														$f = 300;
+													}
+													$special_days[$working_day][$type] = $sales_arr[$working_day][$type];
 												}
 											}else{
-												if($sales_arr[$working_day][$timezone]>=$target['Target'][$w_arr[$day]]){
-													$special_fee += 300;
-													$special_days[$working_day][$timezone] = $sales_arr[$working_day][$timezone];
+												if($sales_arr[$working_day][$type]>=$target['Target'][$w_arr[$day]]){
+													if($f==0){
+														$special_fee += 300;
+														$f = 300;
+													}
+													$special_days[$working_day][$type] = $sales_arr[$working_day][$type];
 												}
 											}
 										}
-									}
-									elseif($timezone=='lunch/dinner'){
-										$t_arr = array(0=>"lunch", 1=>"dinner");$f=0;
-										foreach($t_arr as $type){
-											$target = $this->Target->find('first', array(
-												'conditions' => array('Target.location_id' => $location['Location']['id'], 'Target.working_month' => $month.'-01', 'Target.type' => $type)
-											));
-											if($target!=null){
-												# 祝日判定
-												if($result==true){
-													if($sales_arr[$working_day][$type]>=$target['Target']['bonus_five']){
-														if($f==0){
-															$special_fee += 300;
-															$f = 300;
-														}
-														$special_days[$working_day][$type] = $sales_arr[$working_day][$type];
-													}
-												}else{
-													if($sales_arr[$working_day][$type]>=$target['Target'][$w_arr[$day]]){
-														if($f==0){
-															$special_fee += 300;
-															$f = 300;
-														}
-														$special_days[$working_day][$type] = $sales_arr[$working_day][$type];
-													}
-												}
-											}
-										}
-									}
-									#賄い
-									if($attendance_result['AttendanceResult']['makanai']==1){
-										$makanai += 300;
 									}
 								}
-								#page 1
-								$obj->setActiveSheetIndex(0)
-									->setCellValue('B2', date('Y年m月', strtotime($month)))
-									->setCellValue('C'.$num, $member['Member']['name'])
-									->setCellValue('D'.$num, count($attendance_results))
-									->setCellValue('E'.$num, $hours_arr['weekday']['normal']+$hours_arr['weekday']['late']+$hours_arr['weekend']['normal']+$hours_arr['weekend']['late'])
-									->setCellValue('F'.$num, $hours_arr['weekday']['normal'])
-									->setCellValue('G'.$num, $hours_arr['weekend']['normal'])
-									->setCellValue('H'.$num, $hours_arr['weekday']['late'])
-									->setCellValue('I'.$num, $hours_arr['weekend']['late'])
-									->setCellValue('J'.$num, floor($salary_arr['weekday']['normal']))
-									->setCellValue('K'.$num, floor($salary_arr['weekend']['normal']))
-									->setCellValue('L'.$num, floor($salary_arr['weekday']['late']))
-									->setCellValue('M'.$num, floor($salary_arr['weekend']['late']))
-									->setCellValue('N'.$num, $special_fee)
-									->setCellValue('P'.$num, $compensation)
-									->setCellValue('R'.$num, $makanai);
-								$num += 1;
+								#賄い
+								if($attendance_result['AttendanceResult']['makanai']==1){
+									$makanai += 300;
+								}
 							}
+							#page 1
+							$obj->setActiveSheetIndex(0)
+								->setCellValue('B2', date('Y年m月', strtotime($month)))
+								->setCellValue('C'.$num, $member['Member']['name'])
+								->setCellValue('D'.$num, count($attendance_results))
+								->setCellValue('E'.$num, $hours_arr['weekday']['normal']+$hours_arr['weekday']['late']+$hours_arr['weekend']['normal']+$hours_arr['weekend']['late'])
+								->setCellValue('F'.$num, $hours_arr['weekday']['normal'])
+								->setCellValue('G'.$num, $hours_arr['weekend']['normal'])
+								->setCellValue('H'.$num, $hours_arr['weekday']['late'])
+								->setCellValue('I'.$num, $hours_arr['weekend']['late'])
+								->setCellValue('J'.$num, floor($salary_arr['weekday']['normal']))
+								->setCellValue('K'.$num, floor($salary_arr['weekend']['normal']))
+								->setCellValue('L'.$num, floor($salary_arr['weekday']['late']))
+								->setCellValue('M'.$num, floor($salary_arr['weekend']['late']))
+								->setCellValue('N'.$num, $special_fee)
+								->setCellValue('P'.$num, $compensation)
+								->setCellValue('R'.$num, $makanai);
+							$num += 1;
 						}
 					}
 					#page 2

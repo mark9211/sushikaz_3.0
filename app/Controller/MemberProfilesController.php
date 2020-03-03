@@ -2194,7 +2194,6 @@ class MemberProfilesController extends AppController{
                     ->setCellValue('B2', date('Y年m月', strtotime($date)));
                 $sheet = $obj->getActiveSheet();
                 $sheet->setTitle(date('Y年m月', strtotime($date)));
-
                 # 棚卸
                 $this->loadModel("Stocktaking");
                 $stocktakings = $this->Stocktaking->find('all', array(
