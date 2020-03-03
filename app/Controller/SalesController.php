@@ -297,13 +297,13 @@ class SalesController extends AppController{
 									}else{
 										$day_hourly_wage = $member['Member']['hourly_wage'];
 									}
-									if ($result==true || $day=='日' || $day=='土') {
-										$hourly_wage = $day_hourly_wage + 100;
-										$flag = 1;//休日フラグ
-									}else{
-										$hourly_wage = $day_hourly_wage;
-										$flag = 2;//平日フラグ
-									}
+								}
+								if ($result==true || $day=='日' || $day=='土') {
+									if($day_hourly_wage!=0){ $hourly_wage = $day_hourly_wage + 100; }
+									$flag = 1;//休日フラグ
+								}else{
+									$hourly_wage = $day_hourly_wage;
+									$flag = 2;//平日フラグ
 								}
 								/*
                                 foreach ($datas as $data) {
