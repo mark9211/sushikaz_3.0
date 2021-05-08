@@ -160,7 +160,8 @@ class SalesController extends AppController{
 							->setCellValue('E'.$row_number, $receipt_summary['credit'])
 							->setCellValue('U'.$row_number, $receipt_summary['voucher'])
 							->setCellValue('V'.$row_number, $receipt_summary['other'])
-							->setCellValue('Z'.$row_number, $receipt_summary['discount']);
+							->setCellValue('Z'.$row_number, $receipt_summary['discount'])
+							->setCellValue('AA'.$row_number, $receipt_summary['takeout']);
 						# 支出
 						$expenses = $this->Expense->find('all', array(
 							'conditions' => array('Expense.location_id' => $location['Location']['id'], 'Expense.working_day' => $working_day)

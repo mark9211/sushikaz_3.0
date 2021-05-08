@@ -60,6 +60,7 @@ class ReceiptSummary extends AppModel {
         $receipt_summary = $this->find('first', array(
             'fields' => array(
                 'sum(ReceiptSummary.total) as total',
+				'sum(CASE WHEN ReceiptSummary.breakdown_name = "テイクアウト" THEN ReceiptSummary.total ELSE 0 END) as takeout',
                 'sum(ReceiptSummary.tax) as tax',
                 'sum(ReceiptSummary.visitors) as visitors',
                 'sum(ReceiptSummary.food) as food',
