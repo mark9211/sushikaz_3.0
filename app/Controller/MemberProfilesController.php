@@ -1311,7 +1311,7 @@ class MemberProfilesController extends AppController{
                 $arr[$stocktaking['Type']['id']]['last'][$stocktaking['Stocktaking']['association_id']] = $stocktaking['Stocktaking']['last_month'];
                 $arr[$stocktaking['Type']['id']]['this'][$stocktaking['Stocktaking']['association_id']] = $stocktaking['Stocktaking']['this_month'];
             }
-            $cell_arr=array(1=>52,2=>66,3=>75,4=>82,5=>94,6=>null);
+            $cell_arr=array(1=>52,2=>71,3=>80,4=>87,5=>99,6=>null);
             foreach($arr as $key => $a){
                 $r = $cell_arr[$key];
                 if($r!=null){
