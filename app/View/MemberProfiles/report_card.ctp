@@ -366,7 +366,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     </tr>
                                                     <!-- END 給与 -->
                                                     <!-- BEGIN 定額支出 -->
-                                                    <?$num=26;?>
+                                                    <?$num=25;?>
                                                     <?foreach($expense as $category):?>
                                                         <tr>
                                                             <td style="background-color: #7FFF00!important">
