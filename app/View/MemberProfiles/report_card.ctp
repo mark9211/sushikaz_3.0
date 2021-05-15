@@ -176,44 +176,6 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td width="10%">
-                                                            <?$num++;echo $num;?>
-                                                        </td>
-                                                        <td width="20%">
-                                                            フード売上
-                                                        </td>
-                                                        <?$total=0;?>
-                                                        <?foreach($associations as $association):?>
-                                                            <?$id=$association['Association']['id'];?>
-                                                            <td class="numeric unclickable" width="15%">
-                                                                <?= $summaries[$id]['food'];?>
-                                                            </td>
-                                                            <?$total+=$summaries[$id]['food'];?>
-                                                        <?endforeach;?>
-                                                        <td class="numeric unclickable" width="10%">
-                                                            <?= $total;?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="border-bottom: 1px solid #000;">
-                                                        <td>
-                                                            <?$num++;echo $num;?>
-                                                        </td>
-                                                        <td class="split_cell">
-                                                            ドリンク売上
-                                                        </td>
-                                                        <?$total=0;?>
-                                                        <?foreach($associations as $association):?>
-                                                            <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable split_cell">
-                                                                <?= $summaries[$id]['drink'];?>
-                                                            </td>
-                                                            <?$total+=$summaries[$id]['drink'];?>
-                                                        <?endforeach;?>
-                                                        <td class="unclickable split_cell">
-                                                            <?= $total;?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
                                                         <td>
                                                             <?$num++;echo $num;?>
                                                         </td>
@@ -237,7 +199,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                             <?$num++;echo $num;?>
                                                         </td>
                                                         <td>
-                                                            アラカルト売上
+                                                            ディナー売上
                                                         </td>
                                                         <?$total=0;?>
                                                         <?foreach($associations as $association):?>
@@ -249,44 +211,6 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                         <?endforeach;?>
                                                         <td class="unclickable">
                                                             <?= $total;?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <?$num++;echo $num;?>
-                                                        </td>
-                                                        <td>
-                                                            コース売上
-                                                        </td>
-                                                        <?$total=0;?>
-                                                        <?foreach($associations as $association):?>
-                                                            <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable">
-                                                                <?= $summaries[$id]['course'];?>
-                                                            </td>
-                                                            <?$total+=$summaries[$id]['course'];?>
-                                                        <?endforeach;?>
-                                                        <td class="unclickable">
-                                                            <?= $total;?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <?$num++;echo $num;?>
-                                                        </td>
-                                                        <td class="split_cell">
-                                                            テイクアウト売上
-                                                        </td>
-                                                        <?$total=0;?>
-                                                        <?foreach($associations as $association):?>
-                                                            <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable split_cell">
-                                                                <?= $summaries[$id]['takeout'];?>
-                                                            </td>
-                                                            <?$total+=$summaries[$id]['takeout'];?>
-                                                        <?endforeach;?>
-                                                        <td class="unclickable split_cell">
-                                                            <?=$total;?>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -313,7 +237,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                             <?$num++;echo $num;?>
                                                         </td>
                                                         <td>
-                                                            アラカルト客数
+                                                            ディナー客数
                                                         </td>
                                                         <?$total=0;?>
                                                         <?foreach($associations as $association):?>
@@ -327,47 +251,9 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                             <?=$total;?>
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <?$num++;echo $num;?>
-                                                        </td>
-                                                        <td>
-                                                            コース客数
-                                                        </td>
-                                                        <?$total=0;?>
-                                                        <?foreach($associations as $association):?>
-                                                            <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable">
-                                                                <?= $summaries[$id]['course_visitors'];?>
-                                                            </td>
-                                                            <?$total+=$summaries[$id]['course_visitors'];?>
-                                                        <?endforeach;?>
-                                                        <td class="unclickable">
-                                                            <?=$total;?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <?$num++;echo $num;?>
-                                                        </td>
-                                                        <td class="split_cell">
-                                                            テイクアウト客数
-                                                        </td>
-                                                        <?$total=0;?>
-                                                        <?foreach($associations as $association):?>
-                                                            <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable split_cell">
-                                                                <?= $summaries[$id]['takeout_visitors'];?>
-                                                            </td>
-                                                            <?$total+=$summaries[$id]['takeout_visitors'];?>
-                                                        <?endforeach;?>
-                                                        <td class="unclickable split_cell">
-                                                            <?=$total;?>
-                                                        </td>
-                                                    </tr>
                                                     <tr style="background-color: #fa8072;">
                                                         <td>
-                                                            <?$num+=7;echo $num;?>
+                                                            <?$num=14;echo $num;?>
                                                         </td>
                                                         <td class="split_cell">
                                                             <strong>純売上（税抜）</strong>
@@ -409,7 +295,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <?endforeach;?>
                                                     <!-- END 買掛 -->
                                                     <!-- BEGIN 給与（社員） -->
-                                                    <?$num=28;?>
+                                                    <?$num=21;?>
                                                     <tr>
                                                         <td style="background-color:#7FFF00 !important">
                                                             <?=$num;?>
@@ -480,7 +366,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     </tr>
                                                     <!-- END 給与 -->
                                                     <!-- BEGIN 定額支出 -->
-                                                    <?$num+=2;?>
+                                                    <?$num=26;?>
                                                     <?foreach($expense as $category):?>
                                                         <tr>
                                                             <td style="background-color: #7FFF00!important">
@@ -548,7 +434,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <?endforeach;?>
                                                     <!-- END その他 -->
                                                     <!-- BEGIN 店内経費 -->
-                                                    <?$num=61;?>
+                                                    <?$num=54;?>
                                                     <tr>
                                                         <td>
                                                             <?=$num;?>
@@ -563,25 +449,6 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                                 <?= $summaries[$id]['discount']*-1;?>
                                                             </td>
                                                             <?$total+=$summaries[$id]['discount']*-1;?>
-                                                        <?endforeach;?>
-                                                        <td class="unclickable">
-                                                            <?=$total;?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <?$num++;echo $num;?>
-                                                        </td>
-                                                        <td>
-                                                            ポイント・金券
-                                                        </td>
-                                                        <?$total=0;?>
-                                                        <?foreach($associations as $association):?>
-                                                            <?$id=$association['Association']['id'];?>
-                                                            <td class="unclickable">
-                                                                <?= $summaries[$id]['voucher'];?>
-                                                            </td>
-                                                            <?$total+=$summaries[$id]['voucher'];?>
                                                         <?endforeach;?>
                                                         <td class="unclickable">
                                                             <?=$total;?>

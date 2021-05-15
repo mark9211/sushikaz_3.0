@@ -1234,17 +1234,15 @@ class MemberProfilesController extends AppController{
                     $obj->setActiveSheetIndex(0)
                         ->setCellValue('E'.$num, floor($arr[2]/1.1))
                         ->setCellValue('G'.$num, floor($arr[3]/1.1))
-                        ->setCellValue('I'.$num, floor($arr[4]/1.1))
-                        ->setCellValue('K'.$num, floor($arr[5]/1.1))
-                        ->setCellValue('O'.$num, floor($arr[6]/1.1));
+                        ->setCellValue('I'.$num, floor(($arr[4]+$arr[5])/1.1))
+                        ->setCellValue('K'.$num, floor($arr[6]/1.1));
                 }
                 else{
                     $obj->setActiveSheetIndex(0)
                         ->setCellValue('E'.$num, floor($arr[2]))
                         ->setCellValue('G'.$num, floor($arr[3]))
-                        ->setCellValue('I'.$num, floor($arr[4]))
-                        ->setCellValue('K'.$num, floor($arr[5]))
-                        ->setCellValue('O'.$num, floor($arr[6]));
+                        ->setCellValue('I'.$num, floor($arr[4]+$arr[5]))
+                        ->setCellValue('K'.$num, floor($arr[6]));
                 }
             }
             // Excel2007
@@ -1584,7 +1582,7 @@ class MemberProfilesController extends AppController{
                     $sales_arr = array();
                     # レシートサマリ
                     foreach($associations as $association){
-                        $receipt_summary = $this->ReceiptSummary->monthlySummarize($association['Location']['id'], $month, $association['Attribute']['brand']);
+                        $receipt_summary = $this->ReceiptSummary->monthlySummarize2($association['Location']['id'], $month, $association['Attribute']['brand']);
                         $sales_arr[$association['Association']['id']] = $receipt_summary;
                     }
                     $this->set("summaries", $sales_arr);
