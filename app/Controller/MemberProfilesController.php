@@ -1222,8 +1222,10 @@ class MemberProfilesController extends AppController{
                 ->setCellValue('B2', date('Y年m月', strtotime($date)));
             $sheet = $obj->getActiveSheet();
             $sheet->setTitle(date('Y年m月', strtotime($date)));
-            # 税抜に金額修正する行
+            # 税抜に金額修正する行（10%）
             $num_arr = [15,16,17,18,19,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,42,46,47,48,49,50,51,52,53,55,56,57,58,59,60,61];
+			# 税抜に金額修正する行（8%）
+			$num_arr_8per = [15,17,18];
             foreach($data as $d){
                 $arr = explode(',',$d);
                 $num = $arr[0];
@@ -1231,11 +1233,18 @@ class MemberProfilesController extends AppController{
                 $obj->setActiveSheetIndex(0)
                     ->setCellValue('C'.$num, $arr[1]);
                 if(in_array($num, $num_arr)){
+                	# 税率変更
+                	if(in_array($num, $num_arr_8per)){
+						$tax_rate = 1.08;
+					}
+                	else{
+						$tax_rate = 1.1;
+					}
                     $obj->setActiveSheetIndex(0)
-                        ->setCellValue('E'.$num, floor($arr[2]/1.1))
-                        ->setCellValue('G'.$num, floor($arr[3]/1.1))
-                        ->setCellValue('I'.$num, floor(($arr[4]+$arr[5])/1.1))
-                        ->setCellValue('K'.$num, floor($arr[6]/1.1));
+                        ->setCellValue('E'.$num, floor($arr[2]/$tax_rate))
+                        ->setCellValue('G'.$num, floor($arr[3]/$tax_rate))
+                        ->setCellValue('I'.$num, floor(($arr[4]+$arr[5])/$tax_rate))
+                        ->setCellValue('K'.$num, floor($arr[6]/$tax_rate));
                 }
                 else{
                     $obj->setActiveSheetIndex(0)
