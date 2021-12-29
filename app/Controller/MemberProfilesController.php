@@ -1701,6 +1701,7 @@ class MemberProfilesController extends AppController{
                     $this->set("kaikake_total", $kaikake_total);
                     $this->set("kaikake_total2", $kaikake_total2);
                     $this->set("kaikake", $kaikake_arr);
+                    debug($kaikake_arr);
                     # その他
                     $other_arr = array();
                     $associations = $this->Association->find('all');
