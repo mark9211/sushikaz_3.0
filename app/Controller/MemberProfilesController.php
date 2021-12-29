@@ -1705,7 +1705,7 @@ class MemberProfilesController extends AppController{
                     $other_arr = array();
                     $associations = $this->Association->find('all');
                     $kaikake_stores = $this->KaikakeStore->find('all', array(
-                        'conditions' => array('KaikakeStore.type_id' => 6)
+                        'conditions' => array('KaikakeStore.type_id' => 6, 'KaikakeStore.status' => 'active')
                     ));
                     if($kaikake_stores!=null){
                         foreach($kaikake_stores as $kaikake_store){
