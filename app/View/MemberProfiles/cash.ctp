@@ -138,7 +138,6 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                             <table class="table table-striped table-hover table-bordered" id="sample_1" style="border-bottom-color: #e7ecf1">
                                                 <thead>
                                                 <tr>
-                                                    <th> Num </th>
                                                     <th> 分類 </th>
                                                     <th> 各支払先 </th>
                                                     <?foreach($association_arr as $association):?>
@@ -154,7 +153,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                         ?>
                                                         <tr>
                                                             <?$type=$kaikake_store['Type'];?>
-                                                            <td> <?if(!in_array($type['id'],$type_arr)){$type_arr[]=$type['id'];$num=$cell_arr[$type['id']];echo $num;}else{$num++;echo $num;}?> </td>
+                                                            <?if(!in_array($type['id'],$type_arr)){$type_arr[]=$type['id'];$num=$cell_arr[$type['id']];}else{$num++;}?>
                                                             <td> <?echo $kaikake_store['Type']['name'];?> </td>
                                                             <td> <?echo $kaikake_store['KaikakeStore']['name'];?> </td>
                                                             <?foreach($association_arr as $association):?>
