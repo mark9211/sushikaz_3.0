@@ -142,7 +142,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <th> 分類 </th>
                                                     <th> 各支払先 </th>
                                                     <?foreach($association_arr as $association):?>
-                                                        <th><?= $association['Location']['name'];?>（<?= $association['Attribute']['name'];?>）</th>
+                                                        <th><?= $association['Location']['name'];?>(<?= $association['Attribute']['name'];?>)</th>
                                                     <?endforeach;?>
                                                 </tr>
                                                 </thead>
