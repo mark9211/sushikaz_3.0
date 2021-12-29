@@ -116,10 +116,10 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_2['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label">
+                                                                        <label class="col-md-2 control-label">
                                                                             <strong><?= $store['KaikakeStore']['name'];?></strong>
                                                                         </label>
-                                                                        <div class="col-md-9">
+                                                                        <div class="col-md-10">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
@@ -148,10 +148,10 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_3['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label">
+                                                                        <label class="col-md-2 control-label">
                                                                             <strong><?= $store['KaikakeStore']['name'];?></strong>
                                                                         </label>
-                                                                        <div class="col-md-9">
+                                                                        <div class="col-md-10">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
@@ -180,10 +180,10 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_4['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label">
+                                                                        <label class="col-md-2 control-label">
                                                                             <strong><?= $store['KaikakeStore']['name'];?></strong>
                                                                         </label>
-                                                                        <div class="col-md-9">
+                                                                        <div class="col-md-10">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
@@ -212,10 +212,10 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_5['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label">
+                                                                        <label class="col-md-2 control-label">
                                                                             <strong><?= $store['KaikakeStore']['name'];?></strong>
                                                                         </label>
-                                                                        <div class="col-md-9">
+                                                                        <div class="col-md-10">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
@@ -244,10 +244,10 @@ echo $this->Html->script('assets/pages/scripts/form-icheck.min.js');
                                                             <div class="form-body">
                                                                 <?foreach($tab_6['Store'] as $store):?>
                                                                     <div class="form-group">
-                                                                        <label class="col-md-3 control-label">
+                                                                        <label class="col-md-2 control-label">
                                                                             <strong><?= $store['KaikakeStore']['name'];?></strong>
                                                                         </label>
-                                                                        <div class="col-md-9">
+                                                                        <div class="col-md-10">
                                                                             <div class="input-group">
                                                                                 <div class="icheck-inline">
                                                                                     <?foreach($associations as $association):?>
