@@ -10,6 +10,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
 //echo $this->Html->script('assets/pages/scripts/table-datatables-buttons.min.js');
 
 ?>
+<style>table{font-size: 12px;}</style>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN CONTENT -->
