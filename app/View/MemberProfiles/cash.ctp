@@ -163,9 +163,9 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                                 <td class="clickable">
                                                                     <?if(isset($kaikake_store['Today'][$id])):?>
                                                                         <span><?echo $kaikake_store['Today'][$id]['KaikakeFee']['fee'];?></span>
-                                                                        <input type="text" placeholder="金額を入力してください" class="form-control input-small inputNumber invisible" value="" style="display: none;">
+                                                                        <input type="text" placeholder="金額を入力してください" class="form-control inputNumber invisible" value="" style="display: none;">
                                                                     <?else:?>
-                                                                        <input type="text" placeholder="金額を入力してください" class="form-control input-small inputNumber visible <?if($id==4&&$num!=16&&$num!=50&&$num!=68){echo "separate";}?>" value="" style="display: block;">
+                                                                        <input type="text" placeholder="金額を入力してください" class="form-control inputNumber visible <?if($id==4&&$num!=16&&$num!=50&&$num!=68){echo "separate";}?>" value="" style="display: block;">
                                                                     <?endif;?>
                                                                     <input type="hidden" class="association" value="<?echo $id;?>">
                                                                     <input type="hidden" class="store" value="<?echo $kaikake_store['KaikakeStore']['id'];?>">
