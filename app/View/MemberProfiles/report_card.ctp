@@ -150,7 +150,7 @@ echo $this->Html->script('assets/global/plugins/datatables/plugins/bootstrap/dat
                                                     <th> Num </th>
                                                     <th> 分類 </th>
                                                     <?foreach($associations as $association):?>
-                                                        <th><?echo $association['Location']['name'];?>（<?echo $association['Attribute']['name'];?>）</th>
+                                                        <th><?echo $association['Location']['name'];?>(<?echo $association['Attribute']['name'];?>)</th>
                                                     <?endforeach;?>
                                                     <th> 合計 </th>
                                                 </tr>
