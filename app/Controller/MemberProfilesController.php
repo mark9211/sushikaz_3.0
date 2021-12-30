@@ -1244,14 +1244,16 @@ class MemberProfilesController extends AppController{
                         ->setCellValue('E'.$num, floor($arr[2]/$tax_rate))
                         ->setCellValue('G'.$num, floor($arr[3]/$tax_rate))
                         ->setCellValue('I'.$num, floor(($arr[4]+$arr[5])/$tax_rate))
-                        ->setCellValue('K'.$num, floor($arr[6]/$tax_rate));
+                        ->setCellValue('K'.$num, floor($arr[6]/$tax_rate))
+                        ->setCellValue('M'.$num, floor($arr[7]/$tax_rate));
                 }
                 else{
                     $obj->setActiveSheetIndex(0)
                         ->setCellValue('E'.$num, floor($arr[2]))
                         ->setCellValue('G'.$num, floor($arr[3]))
                         ->setCellValue('I'.$num, floor($arr[4]+$arr[5]))
-                        ->setCellValue('K'.$num, floor($arr[6]));
+                        ->setCellValue('K'.$num, floor($arr[6]))
+                        ->setCellValue('M'.$num, floor($arr[7]));
                 }
             }
             // Excel2007
