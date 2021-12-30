@@ -1305,7 +1305,8 @@ class MemberProfilesController extends AppController{
                     ->setCellValue('F'.$num, $arr[4])
                     ->setCellValue('G'.$num, $arr[5])
                     ->setCellValue('H'.$num, $arr[6])
-                    ->setCellValue('I'.$num, $arr[7]);
+                    ->setCellValue('I'.$num, $arr[7])
+                    ->setCellValue('J'.$num, $arr[8]);
             }
             # 棚卸
             $this->loadModel("Stocktaking");
@@ -1328,12 +1329,14 @@ class MemberProfilesController extends AppController{
                     if(isset($a['last'][3])){ $last3=$a['last'][3]; }else{ $last3=0; }
                     if(isset($a['last'][4])){ $last4=$a['last'][4]; }else{ $last4=0; }
                     if(isset($a['last'][5])){ $last5=$a['last'][5]; }else{ $last5=0; }
+                    if(isset($a['last'][6])){ $last6=$a['last'][6]; }else{ $last6=0; }
                     $obj->setActiveSheetIndex(0)
                         ->setCellValue('E'.$r, $last1)
                         ->setCellValue('F'.$r, $last2)
                         ->setCellValue('G'.$r, $last3)
                         ->setCellValue('H'.$r, $last4)
-                        ->setCellValue('I'.$r, $last5);
+                        ->setCellValue('I'.$r, $last5)
+                        ->setCellValue('J'.$r, $last6);
                     $r++;
                     # this
                     if(isset($a['this'][1])){ $this1=$a['this'][1]; }else{ $this1=0; }
@@ -1341,12 +1344,14 @@ class MemberProfilesController extends AppController{
                     if(isset($a['this'][3])){ $this3=$a['this'][3]; }else{ $this3=0; }
                     if(isset($a['this'][4])){ $this4=$a['this'][4]; }else{ $this4=0; }
                     if(isset($a['this'][5])){ $this5=$a['this'][5]; }else{ $this5=0; }
+                    if(isset($a['this'][6])){ $this6=$a['this'][6]; }else{ $this6=0; }
                     $obj->setActiveSheetIndex(0)
                         ->setCellValue('E'.$r, $this1)
                         ->setCellValue('F'.$r, $this2)
                         ->setCellValue('G'.$r, $this3)
                         ->setCellValue('H'.$r, $this4)
-                        ->setCellValue('I'.$r, $this5);
+                        ->setCellValue('I'.$r, $this5)
+                        ->setCellValue('J'.$r, $this6);
                 }
             }
             // Excel2007
